@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Ventas · Feria NewMix{% endblock %}
+{% block contenido %}
+<div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mb-4">
+    <div><h1 class="section-title mb-1">Ventas</h1><p class="text-body-secondary mb-0">Cada venta registra un disco. Valores en pesos chilenos.</p></div>
+    {% if perms.ventasApp.add_venta %}<a class="btn btn-newmix" href="{% url 'ventas_crear' %}">Registrar venta</a>{% endif %}
+</div>
+<form method="get" class="row g-2 mb-4" role="search">
+    <div class="col-md-6">
+        <label class="form-label" for="buscar-venta">Buscar por cliente, correo, disco o artista</label>
+        <input class="form-control" id="buscar-venta" type="search" name="q" value="{{ q }}">
+    </div>
+    <div class="col-md-3">
+        <label class="form-label" for="fecha-venta">Fecha</label>
+        <input class="form-control" id="fecha-venta" type="date" name="fecha" value="{{ fecha }}">
+    </div>
+    <div class="col-md-3 d-flex align-items-end gap-2">
+        <button class="btn btn-newmix" type="submit">Buscar</button>
+        <a class="btn btn-outline-secondary" href="{% url 'ventas_lista' %}">Limpiar</a>
+    </div>
+</form>
+<div class="table-responsive card-newmix">
+    <table class="table align-middle mb-0">
+        <thead class="table-light"><tr>
+            <th scope="col">N.º</th><th scope="col">Fecha</th><th scope="col">Cliente</th><th scope="col">Disco</th>
+            <th scope="col">Cantidad</th><th scope="col">Precio unitario</th><th scope="col">Total</th>
+            {% if perms.ventasApp.change_venta or perms.ventasApp.delete_venta %}<th scope="col">Acciones</th>{% endif %}
+        </tr></thead>
+        <tbody>
+        {% for venta in ventas %}
+        <tr>
+            <td>{{ venta.pk }}</td><td class="text-nowrap">{{ venta.fecha|date:'d/m/Y' }}</td><td>{{ venta.cliente }}</td>
+            <td>{{ venta.disco.titulo }}<br><small class="text-body-secondary">{{ venta.disco.artista }}</small></td>
+            <td>{{ venta.cantidad }}</td><td class="text-nowrap">${{ venta.precio_unitario|floatformat:'0g' }}</td>
+            <td class="text-nowrap fw-semibold">${{ venta.total|floatformat:'0g' }}</td>
+            {% if perms.ventasApp.change_venta or perms.ventasApp.delete_venta %}
+            <td class="text-nowrap">
+                {% if perms.ventasApp.change_venta %}<a class="btn btn-sm btn-outline-primary" href="{% url 'ventas_editar' venta.pk %}">Editar</a>{% endif %}
+                {% if perms.ventasApp.delete_venta %}<a class="btn btn-sm btn-outline-danger" href="{% url 'ventas_eliminar' venta.pk %}">Eliminar</a>{% endif %}
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr><td colspan="8" class="text-center py-4 text-body-secondary">No hay ventas{% if q or fecha %} que coincidan con los filtros{% else %} registradas{% endif %}.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

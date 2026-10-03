@@ -1,0 +1,242 @@
+/* =========================================================
+   Feria NewMix — hoja de estilos propia (sobre Bootstrap 5 local)
+   Paleta editorial cálida, minimalista y clara.
+   ========================================================= */
+
+:root {
+  --newmix-bg: #faf9f7;
+  --newmix-surface: #ffffff;
+  --newmix-ink: #211c1a;
+  --newmix-ink-soft: #6b6560;
+  --newmix-line: #ece7e1;
+  --newmix-brand: #c8102e;      /* rojo corporativo — acento principal */
+  --newmix-brand-dark: #9c0c23;
+  --newmix-brand-tint: #fdecee; /* rojo muy claro, para fondos suaves */
+  --newmix-gold: #c99a2e;       /* acento secundario, uso puntual */
+  --newmix-radius: 1rem;
+  --newmix-shadow: 0 10px 30px -18px rgba(32, 29, 26, 0.35);
+}
+
+body {
+  background-color: var(--newmix-bg);
+  color: var(--newmix-ink);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+a {
+  color: var(--newmix-brand);
+}
+a:hover {
+  color: var(--newmix-brand-dark);
+}
+
+/* ---------- Navbar ---------- */
+.navbar-newmix {
+  background-color: var(--newmix-brand);
+  border-bottom: 1px solid var(--newmix-brand-dark);
+}
+
+.navbar-newmix .navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-newmix .nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+}
+.navbar-newmix .nav-link.active,
+.navbar-newmix .nav-link:hover {
+  color: #ffffff;
+}
+
+.brand-mark {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+}
+
+/* ---------- Hero / encabezado de página ---------- */
+.newmix-hero {
+  background: linear-gradient(135deg, #fff7f2 0%, var(--newmix-bg) 70%);
+  border-bottom: 1px solid var(--newmix-line);
+  padding: 3.5rem 0;
+}
+
+.newmix-hero h1 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.newmix-hero .lead {
+  color: var(--newmix-ink-soft);
+  max-width: 46rem;
+}
+
+.newmix-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--newmix-brand);
+}
+
+/* ---------- Tarjetas ---------- */
+.card-newmix {
+  background: var(--newmix-surface);
+  border: 1px solid var(--newmix-line);
+  border-radius: var(--newmix-radius);
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Igualar alturas SOLO en grillas de tarjetas (se añade .h-100 a propósito) */
+.card-newmix.h-100 {
+  height: 100%;
+}
+.card-newmix:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--newmix-shadow);
+}
+.card-newmix img {
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  width: 100%;
+}
+.card-newmix .card-body {
+  padding: 1.1rem 1.25rem 1.35rem;
+}
+
+.badge-genero {
+  background-color: var(--newmix-brand);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+}
+
+.badge-formato {
+  background-color: rgba(32, 29, 26, 0.06);
+  color: var(--newmix-ink-soft);
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 0.3rem 0.7rem;
+  font-size: 0.75rem;
+}
+
+.precio {
+  font-weight: 700;
+  color: var(--newmix-brand-dark);
+  font-size: 1.15rem;
+}
+
+/* ---------- Botones ---------- */
+.btn-newmix {
+  background-color: var(--newmix-brand);
+  border-color: var(--newmix-brand);
+  color: #fff;
+  font-weight: 600;
+}
+.btn-newmix:hover {
+  background-color: var(--newmix-brand-dark);
+  border-color: var(--newmix-brand-dark);
+  color: #fff;
+}
+.btn-outline-newmix {
+  border-color: var(--newmix-line);
+  color: var(--newmix-ink);
+  font-weight: 600;
+}
+.btn-outline-newmix:hover {
+  background-color: var(--newmix-ink);
+  border-color: var(--newmix-ink);
+  color: #fff;
+}
+
+/* ---------- Filtros ---------- */
+.filtro-newmix {
+  background: var(--newmix-surface);
+  border: 1px solid var(--newmix-line);
+  border-radius: var(--newmix-radius);
+  padding: 1.1rem 1.25rem;
+}
+
+/* ---------- Footer ---------- */
+.footer-newmix {
+  background-color: var(--newmix-brand-dark);
+  color: #ffffff;
+  margin-top: 4rem;
+}
+.footer-newmix a {
+  color: #ffffff;
+  text-decoration: none;
+}
+.footer-newmix a:hover {
+  color: #f3c9ce;
+}
+.footer-newmix .footer-brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #ffffff;
+}
+.footer-newmix small {
+  color: rgba(255, 255, 255, 0.72);
+}
+.footer-newmix hr {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ---------- Carrusel de portada ---------- */
+.carousel-newmix .carousel-inner {
+  border-radius: var(--newmix-radius);
+  overflow: hidden;
+  box-shadow: var(--newmix-shadow);
+}
+.carousel-newmix .carousel-item img {
+  height: 420px;
+  object-fit: cover;
+}
+.carousel-newmix .carousel-caption {
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: left;
+  padding: 2.5rem 1.5rem 1.25rem;
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0) 100%);
+}
+.carousel-newmix .carousel-caption h5 {
+  font-weight: 700;
+}
+.carousel-newmix .carousel-control-prev,
+.carousel-newmix .carousel-control-next {
+  width: 8%;
+}
+.carousel-newmix .carousel-indicators [data-bs-target] {
+  background-color: var(--newmix-brand);
+}
+
+@media (max-width: 576px) {
+  .carousel-newmix .carousel-item img {
+    height: 260px;
+  }
+}
+
+/* ---------- Utilidades ---------- */
+.avatar-thumb {
+  width: 96px;
+  height: 96px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--newmix-surface);
+  box-shadow: var(--newmix-shadow);
+}
+
+.section-title {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}

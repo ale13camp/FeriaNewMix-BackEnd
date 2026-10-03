@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Catálogo de artistas · Feria NewMix{% endblock %}
+
+{% block header %}
+<header class="newmix-hero">
+    <div class="container">
+        <p class="newmix-eyebrow mb-2">Sección Artistas</p>
+        <h1 class="display-6 mb-2">Catálogo completo</h1>
+        <p class="lead mb-0">Filtra por género musical para encontrar a tu artista favorito.</p>
+    </div>
+</header>
+{% endblock %}
+
+{% block contenido %}
+<form method="get" class="filtro-newmix mb-4">
+    <div class="row g-3 align-items-end">
+        <div class="col-sm-6 col-md-4">
+            <label for="genero" class="form-label fw-semibold">Género</label>
+            <select name="genero" id="genero" class="form-select">
+                <option value="" {% if not genero_filtro %}selected{% endif %}>Todos los géneros</option>
+                {% for g in generos %}
+                <option value="{{ g }}" {% if g == genero_filtro %}selected{% endif %}>{{ g }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-sm-6 col-md-3">
+            <button type="submit" class="btn btn-newmix w-100">Filtrar</button>
+        </div>
+        {% if genero_filtro %}
+        <div class="col-md-3">
+            <a href="{% url 'artistas_catalogo' %}" class="btn btn-outline-newmix w-100">Quitar filtro</a>
+        </div>
+        {% endif %}
+    </div>
+</form>
+
+<p class="text-body-secondary mb-4">Mostrando {{ total }} artista{{ total|pluralize }}{% if genero_filtro %} del género <strong>{{ genero_filtro }}</strong>{% endif %}.</p>
+
+<div class="row g-4">
+    {% for artista in artistas %}
+    <div class="col-sm-6 col-lg-3">
+        <a href="{% url 'artistas_detalle' artista.id %}" class="text-decoration-none text-reset">
+            <div class="card-newmix h-100">
+                {% if artista.imagen %}<img src="{{ artista.imagen.url }}" alt="Foto de {{ artista.nombre }}">{% endif %}
+                <div class="card-body">
+                    <span class="badge-genero mb-2 d-inline-block">{{ artista.genero }}</span>
+                    <h5 class="card-title mb-1">{{ artista.nombre }}</h5>
+                    <p class="text-body-secondary mb-0">{{ artista.pais }} · {{ artista.anio_formacion }}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-light border">No hay artistas para este filtro por ahora.</div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

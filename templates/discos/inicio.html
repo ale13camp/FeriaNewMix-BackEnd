@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Tienda de discos · Feria NewMix{% endblock %}
+
+{% block header %}
+<header class="newmix-hero">
+    <div class="container">
+        <p class="newmix-eyebrow mb-2">Sección Discos</p>
+        <h1 class="display-6 mb-3">Música en formato físico</h1>
+        <p class="lead">
+            {{ total_discos }} títulos disponibles en vinilo, CD y cassette. Compra directa,
+            sin intermediarios: cada disco muestra su precio y stock real de la tienda.
+        </p>
+        <div class="d-flex flex-wrap gap-2 mb-3">
+            {% for formato in formatos %}
+            <span class="badge-formato">{{ formato }}</span>
+            {% endfor %}
+        </div>
+        <a href="{% url 'discos_catalogo' %}" class="btn btn-newmix btn-lg px-4">Ver catálogo completo</a>
+    </div>
+</header>
+{% endblock %}
+
+{% block contenido %}
+
+<p class="newmix-eyebrow mb-1">Últimas unidades</p>
+<h2 class="section-title mb-4">Discos casi agotados</h2>
+
+<div class="row g-4">
+    {% for disco in destacados %}
+    <div class="col-md-4">
+        <a href="{% url 'discos_detalle' disco.id %}" class="text-decoration-none text-reset">
+            <div class="card-newmix h-100">
+                {% if disco.imagen %}<img src="{{ disco.imagen.url }}" alt="Portada de {{ disco.titulo }}">{% endif %}
+                <div class="card-body">
+                    <div class="d-flex gap-2 mb-2">
+                        <span class="badge-genero">{{ disco.genero }}</span>
+                        <span class="badge-formato">{{ disco.formato }}</span>
+                    </div>
+                    <h5 class="card-title mb-1">{{ disco.titulo }}</h5>
+                    <p class="text-body-secondary mb-2">{{ disco.artista }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="precio">${{ disco.precio }}</span>
+                        <small class="text-body-secondary">{{ disco.stock }} en stock</small>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% empty %}<p class="alert alert-light border">No hay discos disponibles.</p>{% endfor %}
+</div>
+
+{% endblock %}

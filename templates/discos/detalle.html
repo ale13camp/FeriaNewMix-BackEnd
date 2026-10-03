@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ disco.titulo }} · Feria NewMix{% endblock %}
+
+{% block header %}
+<header class="newmix-hero py-4">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{% url 'discos_inicio' %}">Discos</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'discos_catalogo' %}">Catálogo</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ disco.titulo }}</li>
+            </ol>
+        </nav>
+    </div>
+</header>
+{% endblock %}
+
+{% block contenido %}
+
+<div class="row g-5">
+    <div class="col-lg-5">
+        <div class="card-newmix p-0">
+            {% if disco.imagen %}<img src="{{ disco.imagen.url }}" alt="Portada de {{ disco.titulo }}" class="w-100">{% endif %}
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="d-flex gap-2 mb-3">
+            <span class="badge-genero">{{ disco.genero }}</span>
+            <span class="badge-formato">{{ disco.formato }}</span>
+            <span class="badge-formato">{{ disco.anio }}</span>
+        </div>
+        <h1 class="h2 mb-1">{{ disco.titulo }}</h1>
+        <p class="fs-5 mb-4">
+            <a href="{% url 'discos_catalogo' %}?artista={{ disco.artista|urlencode }}">{{ disco.artista }}</a>
+        </p>
+        <p class="mb-4">{{ disco.descripcion }}</p>
+
+        <div class="card-newmix p-4 mb-4" style="max-width: 26rem;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-body-secondary">Precio</span>
+                <span class="precio fs-3">${{ disco.precio }}</span>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-body-secondary">Disponibilidad</span>
+                <span class="fw-semibold {% if disponibilidad == 'Agotado' %}text-danger{% else %}text-success{% endif %}">
+                    {{ disponibilidad }} ({{ disco.stock }} unidades)
+                </span>
+            </div>
+            {% if perms.ventasApp.add_venta and disco.stock %}<a href="{% url 'ventas_crear' %}?disco={{ disco.pk }}" class="btn btn-newmix w-100">Registrar venta</a>{% endif %}
+            {% if disco.documento %}<a href="{% url 'discos_documento' disco.pk %}" class="btn btn-outline-newmix w-100 mt-2">Descargar documento PDF</a>{% endif %}
+        </div>
+
+        {% if otros_del_artista %}
+        <h3 class="h5 mb-3">Más de {{ disco.artista }}</h3>
+        <div class="row g-3">
+            {% for otro in otros_del_artista %}
+            <div class="col-6 col-md-4">
+                <a href="{% url 'discos_detalle' otro.id %}" class="text-decoration-none text-reset">
+                    <div class="card-newmix">
+                        {% if otro.imagen %}<img src="{{ otro.imagen.url }}" alt="Portada de {{ otro.titulo }}">{% endif %}
+                        <div class="card-body p-2">
+                            <p class="mb-0 small fw-semibold">{{ otro.titulo }}</p>
+                            <span class="precio" style="font-size: 0.95rem;">${{ otro.precio }}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock %}

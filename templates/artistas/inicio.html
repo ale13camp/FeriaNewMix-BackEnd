@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Artistas · Feria NewMix{% endblock %}
+
+{% block header %}
+<header class="newmix-hero">
+    <div class="container">
+        <p class="newmix-eyebrow mb-2">Sección Artistas</p>
+        <h1 class="display-6 mb-3">El catálogo de artistas del sello</h1>
+        <p class="lead">
+            {{ total_artistas }} artistas de distintos géneros y países conforman el catálogo
+            de Feria NewMix. Cada uno tiene su propia ficha, con biografía y discografía disponible
+            en la tienda.
+        </p>
+        <a href="{% url 'artistas_catalogo' %}" class="btn btn-newmix btn-lg px-4 mt-2">Ver catálogo completo</a>
+    </div>
+</header>
+{% endblock %}
+
+{% block contenido %}
+
+<p class="newmix-eyebrow mb-1">Elegido para hoy</p>
+<h2 class="section-title mb-4">Artista del día</h2>
+
+{% if artista_del_dia %}
+<div class="card-newmix p-0 overflow-hidden">
+    <div class="row g-0">
+        <div class="col-md-4">
+            {% if artista_del_dia.imagen %}<img src="{{ artista_del_dia.imagen.url }}"
+                 alt="Foto de {{ artista_del_dia.nombre }}"
+                 class="w-100 h-100" style="object-fit: cover;">{% endif %}
+        </div>
+        <div class="col-md-8">
+            <div class="card-body p-4 p-md-5">
+                <span class="badge-genero mb-3 d-inline-block">{{ artista_del_dia.genero }}</span>
+                <h3 class="mb-1">{{ artista_del_dia.nombre }}</h3>
+                <p class="text-body-secondary mb-3">
+                    {{ artista_del_dia.pais }} · formados en {{ artista_del_dia.anio_formacion }} ·
+                    {{ artista_del_dia.integrantes }} integrantes
+                </p>
+                <p class="mb-4">{{ artista_del_dia.bio }}</p>
+                <a href="{% url 'artistas_detalle' artista_del_dia.id %}" class="btn btn-newmix">Ver ficha completa</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}<p class="alert alert-light border">Aún no hay artistas registrados.</p>{% endif %}
+{% endblock %}

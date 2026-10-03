@@ -1,0 +1,132 @@
+[
+  {
+    "id": 1,
+    "nombre": "System of a Down",
+    "genero": "Metal alternativo",
+    "pais": "Estados Unidos",
+    "anio_formacion": 1994,
+    "integrantes": 4,
+    "imagen": "system.jpg",
+    "bio": "Banda formada en Glendale, California, por músicos de ascendencia armenia. Su estilo mezcla metal alternativo con influencias del folclore armenio y letras de crítica social y política."
+  },
+  {
+    "id": 2,
+    "nombre": "Gorillaz",
+    "genero": "Alternativo / Trip-hop",
+    "pais": "Reino Unido",
+    "anio_formacion": 1998,
+    "integrantes": 2,
+    "imagen": "gorillaz.jpg",
+    "bio": "Proyecto creado por Damon Albarn (Blur) y el ilustrador Jamie Hewlett, conocido por sus cuatro miembros animados: 2D, Murdoc, Noodle y Russel. Fusiona rock alternativo, hip-hop y trip-hop."
+  },
+  {
+    "id": 3,
+    "nombre": "Joji",
+    "genero": "R&B / Lo-fi",
+    "pais": "Japón",
+    "anio_formacion": 2017,
+    "integrantes": 1,
+    "imagen": "joji.jpg",
+    "bio": "Artista japonés-australiano (George Kusunoki Miller) que tras una carrera como comediante en YouTube se reinventó como cantante de R&B lo-fi introspectivo, firmado en 88rising."
+  },
+  {
+    "id": 4,
+    "nombre": "The Killers",
+    "genero": "Rock alternativo",
+    "pais": "Estados Unidos",
+    "anio_formacion": 2001,
+    "integrantes": 4,
+    "imagen": "killers.jpg",
+    "bio": "Banda formada en Las Vegas, Nevada, que combina rock alternativo con sintetizadores new wave. Alcanzó fama mundial con su álbum debut Hot Fuss."
+  },
+  {
+    "id": 5,
+    "nombre": "Michael Jackson",
+    "genero": "Pop",
+    "pais": "Estados Unidos",
+    "anio_formacion": 1971,
+    "integrantes": 1,
+    "imagen": "michael.jpg",
+    "bio": "Cantante, compositor y bailarín originario de Gary, Indiana, conocido como el 'Rey del Pop'. Su carrera solista, iniciada tras los Jackson 5, definió el pop global de las décadas de los 80 y 90."
+  },
+  {
+    "id": 6,
+    "nombre": "The Smiths",
+    "genero": "Post-punk",
+    "pais": "Reino Unido",
+    "anio_formacion": 1982,
+    "integrantes": 4,
+    "imagen": "smiths.jpg",
+    "bio": "Banda de Manchester liderada por Morrissey y Johnny Marr, referente del post-punk y rock alternativo británico de los años 80 pese a su corta trayectoria de apenas cinco años."
+  },
+  {
+    "id": 7,
+    "nombre": "The Strokes",
+    "genero": "Indie rock",
+    "pais": "Estados Unidos",
+    "anio_formacion": 1998,
+    "integrantes": 5,
+    "imagen": "strokes.jpg",
+    "bio": "Banda neoyorquina que lideró el resurgimiento del garage rock e indie rock a comienzos de los 2000, a partir del éxito de su álbum debut Is This It."
+  },
+  {
+    "id": 8,
+    "nombre": "The Cure",
+    "genero": "Rock gótico",
+    "pais": "Reino Unido",
+    "anio_formacion": 1976,
+    "integrantes": 5,
+    "imagen": "thecure.jpg",
+    "bio": "Banda británica formada en Crawley, Inglaterra, liderada por Robert Smith. Pionera del rock gótico y referente del post-punk y el new wave británico de fines de los 70 y los 80, con álbumes como Disintegration y Wish."
+},
+  {
+    "id": 9,
+    "nombre": "Arctic Monkeys",
+    "genero": "Indie rock",
+    "pais": "Reino Unido",
+    "anio_formacion": 2002,
+    "integrantes": 4,
+    "imagen": "arcticmonkeys.jpg",
+    "bio": "Banda de rock formada en Sheffield, Inglaterra, liderada por Alex Turner. Saltó a la fama con su álbum debut Whatever People Say I Am, That's What I'm Not (2006), y evolucionó desde el garage rock hacia sonidos más experimentales en discos como AM y The Car."
+  },
+  {
+    "id": 10,
+    "nombre": "Nirvana",
+    "genero": "Grunge",
+    "pais": "Estados Unidos",
+    "anio_formacion": 1987,
+    "integrantes": 3,
+    "imagen": "nirvana.jpg",
+    "bio": "Banda de grunge formada en Aberdeen, Washington, liderada por Kurt Cobain. Su álbum Nevermind (1991) llevó el grunge y el rock alternativo al mainstream mundial, convirtiéndose en una de las bandas más influyentes de los años 90."
+  },
+  {
+    "id": 11,
+    "nombre": "Tyler, The Creator",
+    "genero": "Hip hop alternativo",
+    "pais": "Estados Unidos",
+    "anio_formacion": 2007,
+    "integrantes": 1,
+    "imagen": "tylerthecreator.jpg",
+    "bio": "Rapero, productor y diseñador estadounidense (Tyler Gregory Okonma), fundador del colectivo Odd Future. Conocido por su evolución artística constante, desde el hip hop crudo de sus inicios hasta la sofisticación de discos como Flower Boy e IGOR."
+  },
+  {
+    "id": 12,
+    "nombre": "Kendrick Lamar",
+    "genero": "Hip hop",
+    "pais": "Estados Unidos",
+    "anio_formacion": 2003,
+    "integrantes": 1,
+    "imagen": "kendricklamar.jpg",
+    "bio": "Rapero originario de Compton, California, considerado uno de los artistas más influyentes del hip hop contemporáneo. Ganador del Premio Pulitzer por su álbum DAMN. (2017), combina narrativa social, crítica racial y experimentación sonora."
+  },
+  {
+    "id": 13,
+    "nombre": "Bad Bunny",
+    "genero": "Reggaetón / Trap latino",
+    "pais": "Puerto Rico",
+    "anio_formacion": 2016,
+    "integrantes": 1,
+    "imagen": "badbunny.jpg",
+    "bio": "Cantante y compositor puertorriqueño (Benito Antonio Martínez Ocasio), figura central del reguetón y el trap latino contemporáneo. Su música mezcla géneros urbanos con elementos de rock, bolero y ritmos caribeños, alcanzando éxito global."
+  }
+]

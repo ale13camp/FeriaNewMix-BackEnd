@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Feria NewMix · Artistas y venta de discos{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+    <!-- ===================== NAVBAR ===================== -->
+    <nav class="navbar navbar-expand-lg navbar-newmix sticky-top py-3">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <circle cx="16" cy="16" r="15" fill="#201d1a"/>
+                    <circle cx="16" cy="16" r="11" fill="none" stroke="#4a4540" stroke-width="1"/>
+                    <circle cx="16" cy="16" r="7.5" fill="none" stroke="#4a4540" stroke-width="1"/>
+                    <circle cx="16" cy="16" r="4.5" fill="#ffffff"/>
+                    <circle cx="16" cy="16" r="1.4" fill="#c8102e"/>
+                </svg>
+                Feria NewMix
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navNewmix" aria-controls="navNewmix" aria-expanded="false" aria-label="Abrir menú">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navNewmix">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'home' %}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'artistas_inicio' %}">Artistas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'discos_catalogo' %}">Tienda de discos</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
+                        <ul class="dropdown-menu">
+                            {% if perms.artistasApp.view_artista %}<li><a class="dropdown-item" href="{% url 'artistas_lista' %}">Artistas</a></li>{% endif %}
+                            {% if perms.discosApp.view_disco %}<li><a class="dropdown-item" href="{% url 'discos_lista' %}">Discos</a></li>{% endif %}
+                            {% if perms.ventasApp.view_cliente %}<li><a class="dropdown-item" href="{% url 'clientes_lista' %}">Clientes</a></li>{% endif %}
+                            {% if perms.ventasApp.view_venta %}<li><a class="dropdown-item" href="{% url 'ventas_lista' %}">Ventas</a></li>{% endif %}
+                            {% if user.is_staff and perms.auth.view_user %}<li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="{% url 'admin:auth_user_changelist' %}">Usuarios y perfiles</a></li>{% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-item d-flex align-items-center"><span class="small text-white">{{ user.username }}</span></li>
+                    <li class="nav-item"><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesión</button></form></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===================== ENCABEZADO ===================== -->
+    {% block header %}{% endblock %}
+
+    <!-- ===================== CONTENIDO ===================== -->
+    <main class="container my-5">
+        {% for message in messages %}<div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags|default:'info' }}{% endif %}" role="alert">{{ message }}</div>{% endfor %}
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer-newmix pt-5 pb-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-5">
+                    <div class="footer-brand mb-2">Feria NewMix</div>
+                    <p class="mb-0" style="max-width: 26rem;">
+                        Disquería de barrio con vocación digital: encontraras artistas de América
+                        y Europa, discos en vinilo, CD y cassette para quienes prefieren escuchar al lo Old School.
+                    </p>
+                </div>
+                <div class="col-6 col-md-3">
+                    <div class="footer-brand mb-2" style="font-size: 0.95rem;">Explorar</div>
+                    <ul class="list-unstyled d-flex flex-column gap-2">
+                        <li><a href="{% url 'artistas_inicio' %}">Artistas</a></li>
+                        <li><a href="{% url 'artistas_catalogo' %}">Catálogo de artistas</a></li>
+                        <li><a href="{% url 'discos_catalogo' %}">Tienda de discos</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-4">
+                    <div class="footer-brand mb-2" style="font-size: 0.95rem;">Gestión</div>
+                    <ul class="list-unstyled d-flex flex-column gap-2">
+                        <li>Catálogo de artistas y discos</li>
+                        <li>Registro de clientes y ventas</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-3">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <small>© {% now "Y" %} Feria NewMix · Programación Back End</small>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

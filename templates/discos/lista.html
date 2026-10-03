@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}Administrar discos · Feria NewMix{% endblock %}
+{% block contenido %}
+<div class="d-flex flex-wrap justify-content-between gap-2 mb-4">
+    <h1 class="h2 mb-0">Administrar discos</h1>
+    {% if perms.discosApp.add_disco %}<a href="{% url 'discos_crear' %}" class="btn btn-newmix">Agregar disco</a>{% endif %}
+</div>
+<form method="get" class="filtro-newmix mb-4">
+    <div class="row g-3 align-items-end">
+        <div class="col-md-3"><label for="q" class="form-label">Título o artista</label><input id="q" name="q" value="{{ q }}" class="form-control"></div>
+        <div class="col-md-3"><label for="artista" class="form-label">Artista</label><select id="artista" name="artista" class="form-select"><option value="">Todos</option>{% for artista in artistas %}<option value="{{ artista.nombre }}" {% if artista.nombre == artista_filtro %}selected{% endif %}>{{ artista.nombre }}</option>{% endfor %}</select></div>
+        <div class="col-md-2"><label for="genero" class="form-label">Género</label><select id="genero" name="genero" class="form-select"><option value="">Todos</option>{% for genero in generos %}<option value="{{ genero }}" {% if genero == genero_filtro %}selected{% endif %}>{{ genero }}</option>{% endfor %}</select></div>
+        <div class="col-md-2"><label for="formato" class="form-label">Formato</label><select id="formato" name="formato" class="form-select"><option value="">Todos</option>{% for formato in formatos %}<option value="{{ formato }}" {% if formato == formato_filtro %}selected{% endif %}>{{ formato }}</option>{% endfor %}</select></div>
+        <div class="col-md-2"><button class="btn btn-newmix" type="submit">Buscar</button></div>
+    </div>
+    {% if q or genero_filtro or formato_filtro or artista_filtro %}<a href="{% url 'discos_lista' %}" class="d-inline-block mt-3">Quitar filtros</a>{% endif %}
+</form>
+<p>{{ total }} disco{{ total|pluralize }}.</p>
+<div class="table-responsive">
+<table class="table table-striped table-hover align-middle">
+    <thead><tr><th>Título</th><th>Artista</th><th>Formato</th><th>Precio CLP</th><th>Stock</th><th>Acciones</th></tr></thead>
+    <tbody>{% for disco in discos %}<tr>
+        <td>{{ disco.titulo }}</td><td>{{ disco.artista.nombre }}</td><td>{{ disco.formato }}</td><td>${{ disco.precio }}</td><td>{{ disco.stock }}</td>
+        <td class="text-nowrap"><a href="{% url 'discos_detalle' disco.pk %}" class="btn btn-sm btn-outline-newmix">Ver</a>
+        {% if perms.discosApp.change_disco %}<a href="{% url 'discos_editar' disco.pk %}" class="btn btn-sm btn-outline-newmix">Editar</a>{% endif %}
+        {% if perms.discosApp.delete_disco %}<a href="{% url 'discos_eliminar' disco.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>{% endif %}</td>
+    </tr>{% empty %}<tr><td colspan="6">No hay discos que coincidan con la búsqueda.</td></tr>{% endfor %}</tbody>
+</table>
+</div>
+{% endblock %}

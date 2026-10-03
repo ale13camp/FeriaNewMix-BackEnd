@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}Administrar artistas · Feria NewMix{% endblock %}
+{% block contenido %}
+<div class="d-flex flex-wrap justify-content-between gap-2 mb-4">
+    <h1 class="h2 mb-0">Administrar artistas</h1>
+    {% if perms.artistasApp.add_artista %}<a href="{% url 'artistas_crear' %}" class="btn btn-newmix">Agregar artista</a>{% endif %}
+</div>
+<form method="get" class="filtro-newmix mb-4">
+    <div class="row g-3 align-items-end">
+        <div class="col-md-4"><label for="q" class="form-label">Nombre o país</label><input id="q" name="q" value="{{ q }}" class="form-control"></div>
+        <div class="col-md-3"><label for="genero" class="form-label">Género</label><select id="genero" name="genero" class="form-select"><option value="">Todos</option>{% for genero in generos %}<option value="{{ genero }}" {% if genero == genero_filtro %}selected{% endif %}>{{ genero }}</option>{% endfor %}</select></div>
+        <div class="col-md-3"><label for="pais" class="form-label">País</label><select id="pais" name="pais" class="form-select"><option value="">Todos</option>{% for pais in paises %}<option value="{{ pais }}" {% if pais == pais_filtro %}selected{% endif %}>{{ pais }}</option>{% endfor %}</select></div>
+        <div class="col-md-2"><button class="btn btn-newmix" type="submit">Buscar</button></div>
+    </div>
+    {% if q or genero_filtro or pais_filtro %}<a href="{% url 'artistas_lista' %}" class="d-inline-block mt-3">Quitar filtros</a>{% endif %}
+</form>
+<p>{{ total }} artista{{ total|pluralize }}.</p>
+<div class="table-responsive">
+<table class="table table-striped table-hover align-middle">
+    <thead><tr><th>Nombre</th><th>Género</th><th>País</th><th>Formación</th><th>Acciones</th></tr></thead>
+    <tbody>{% for artista in artistas %}<tr>
+        <td>{{ artista.nombre }}</td><td>{{ artista.genero }}</td><td>{{ artista.pais }}</td><td>{{ artista.anio_formacion }}</td>
+        <td class="text-nowrap"><a href="{% url 'artistas_detalle' artista.pk %}" class="btn btn-sm btn-outline-newmix">Ver</a>
+        {% if perms.artistasApp.change_artista %}<a href="{% url 'artistas_editar' artista.pk %}" class="btn btn-sm btn-outline-newmix">Editar</a>{% endif %}
+        {% if perms.artistasApp.delete_artista %}<a href="{% url 'artistas_eliminar' artista.pk %}" class="btn btn-sm btn-outline-danger">Eliminar</a>{% endif %}</td>
+    </tr>{% empty %}<tr><td colspan="5">No hay artistas que coincidan con la búsqueda.</td></tr>{% endfor %}</tbody>
+</table>
+</div>
+{% endblock %}

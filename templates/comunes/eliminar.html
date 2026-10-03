@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ titulo }} · Feria NewMix{% endblock %}
+{% block contenido %}
+<div class="mx-auto" style="max-width: 640px;">
+    <h1 class="section-title mb-4">{{ titulo }}</h1>
+    <div class="card-newmix p-4">
+        <p>¿Confirmas que deseas eliminar <strong>{{ objeto }}</strong>?</p>
+        <p class="text-body-secondary">Si el registro está relacionado con otros datos, se mostrará el motivo por el que no se puede eliminar.</p>
+        <form method="post" class="d-flex gap-2">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit">Sí, eliminar</button>
+            <a class="btn btn-outline-secondary" href="{{ volver_url }}">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

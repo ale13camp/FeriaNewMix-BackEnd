@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ artista.nombre }} · Feria NewMix{% endblock %}
+
+{% block header %}
+<header class="newmix-hero">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-3">
+                <li class="breadcrumb-item"><a href="{% url 'artistas_inicio' %}">Artistas</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'artistas_catalogo' %}">Catálogo</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ artista.nombre }}</li>
+            </ol>
+        </nav>
+        <div class="d-flex flex-wrap align-items-center gap-4">
+            {% if artista.imagen %}<img src="{{ artista.imagen.url }}" alt="Foto de {{ artista.nombre }}" class="avatar-thumb">{% endif %}
+            <div>
+                <span class="badge-genero mb-2 d-inline-block">{{ artista.genero }}</span>
+                <h1 class="display-6 mb-1">{{ artista.nombre }}</h1>
+                <p class="text-body-secondary mb-0">
+                    {{ artista.pais }} · activos desde {{ artista.anio_formacion }}
+                    ({{ antiguedad }} años) · {{ artista.integrantes }} integrantes
+                </p>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block contenido %}
+
+<div class="row g-4">
+    <div class="col-lg-8">
+        <h2 class="section-title mb-3">Biografía</h2>
+        <p class="fs-5">{{ artista.bio }}</p>
+    </div>
+    <div class="col-lg-4">
+        <div class="card-newmix p-4">
+            <h3 class="h5 mb-3">Ficha técnica</h3>
+            <dl class="row mb-0">
+                <dt class="col-6 text-body-secondary fw-normal">Género</dt>
+                <dd class="col-6 mb-2">{{ artista.genero }}</dd>
+                <dt class="col-6 text-body-secondary fw-normal">País</dt>
+                <dd class="col-6 mb-2">{{ artista.pais }}</dd>
+                <dt class="col-6 text-body-secondary fw-normal">Formación</dt>
+                <dd class="col-6 mb-2">{{ artista.anio_formacion }}</dd>
+                <dt class="col-6 text-body-secondary fw-normal">Integrantes</dt>
+                <dd class="col-6 mb-0">{{ artista.integrantes }}</dd>
+            </dl>
+            <a href="{% url 'discos_catalogo' %}?artista={{ artista.nombre|urlencode }}" class="btn btn-newmix w-100 mt-4">
+                Ver sus discos en la tienda
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

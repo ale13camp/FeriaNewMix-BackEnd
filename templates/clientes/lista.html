@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Clientes · Feria NewMix{% endblock %}
+{% block contenido %}
+<div class="d-flex justify-content-between align-items-center gap-3 flex-wrap mb-4">
+    <h1 class="section-title mb-0">Clientes</h1>
+    {% if perms.ventasApp.add_cliente %}<a class="btn btn-newmix" href="{% url 'clientes_crear' %}">Agregar cliente</a>{% endif %}
+</div>
+<form method="get" class="row g-2 mb-4" role="search">
+    <div class="col-md-8">
+        <label class="form-label" for="buscar-cliente">Buscar por nombre, correo o teléfono</label>
+        <input class="form-control" id="buscar-cliente" type="search" name="q" value="{{ q }}">
+    </div>
+    <div class="col-md-4 d-flex align-items-end gap-2">
+        <button class="btn btn-newmix" type="submit">Buscar</button>
+        <a class="btn btn-outline-secondary" href="{% url 'clientes_lista' %}">Limpiar</a>
+    </div>
+</form>
+<div class="table-responsive card-newmix">
+    <table class="table align-middle mb-0">
+        <thead class="table-light"><tr>
+            <th scope="col">Nombre</th><th scope="col">Correo</th><th scope="col">Teléfono</th>
+            {% if perms.ventasApp.change_cliente or perms.ventasApp.delete_cliente %}<th scope="col">Acciones</th>{% endif %}
+        </tr></thead>
+        <tbody>
+        {% for cliente in clientes %}
+        <tr>
+            <td>{{ cliente.nombre }}</td><td>{{ cliente.correo }}</td><td>{{ cliente.telefono|default:'—' }}</td>
+            {% if perms.ventasApp.change_cliente or perms.ventasApp.delete_cliente %}
+            <td class="text-nowrap">
+                {% if perms.ventasApp.change_cliente %}<a class="btn btn-sm btn-outline-primary" href="{% url 'clientes_editar' cliente.pk %}">Editar</a>{% endif %}
+                {% if perms.ventasApp.delete_cliente %}<a class="btn btn-sm btn-outline-danger" href="{% url 'clientes_eliminar' cliente.pk %}">Eliminar</a>{% endif %}
+            </td>
+            {% endif %}
+        </tr>
+        {% empty %}
+        <tr><td colspan="4" class="text-center py-4 text-body-secondary">No hay clientes{% if q %} que coincidan con la búsqueda{% else %} registrados{% endif %}.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

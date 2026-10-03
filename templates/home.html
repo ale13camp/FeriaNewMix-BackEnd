@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Feria NewMix · Artistas y venta de discos{% endblock %}
+
+{% block header %}
+<header class="newmix-hero">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+                <p class="newmix-eyebrow mb-2">Disquería independiente</p>
+                <h1 class="display-5 mb-3">Descubre artistas y llévate su música a casa, en formato físico.</h1>
+                <p class="lead">
+                    En Feria NewMix curamos artistas emergentes de América y Europa, y vendemos
+                    sus discos en vinilo, CD y cassette. Sin algoritmos: solo buena música y
+                    buen sonido.
+                </p>
+                <div class="d-flex flex-wrap gap-3 mt-4">
+                    <a href="{% url 'artistas_inicio' %}" class="btn btn-newmix btn-lg px-4">Conocer artistas</a>
+                    <a href="{% url 'discos_catalogo' %}" class="btn btn-outline-newmix btn-lg px-4">Ir a la tienda</a>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="card-newmix p-4 text-center h-auto">
+                            <div class="display-6 fw-bold" style="color: var(--newmix-brand);">{{ total_artistas }}</div>
+                            <div class="text-body-secondary">Artistas</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card-newmix p-4 text-center h-auto">
+                            <div class="display-6 fw-bold" style="color: var(--newmix-brand);">{{ total_discos }}</div>
+                            <div class="text-body-secondary">Discos en catálogo</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card-newmix p-4 text-center h-auto">
+                            <div class="display-6 fw-bold" style="color: var(--newmix-brand);">{{ total_generos }}</div>
+                            <div class="text-body-secondary">Géneros musicales representados</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+{% endblock %}
+
+{% block contenido %}
+<div id="carruselDiscos" class="carousel slide carousel-newmix mb-5" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        {% for disco in discos_destacados %}
+        <button type="button" data-bs-target="#carruselDiscos" data-bs-slide-to="{{ forloop.counter0 }}"
+                {% if forloop.first %}class="active" aria-current="true"{% endif %}
+                aria-label="Disco {{ forloop.counter }}"></button>
+        {% endfor %}
+    </div>
+    <div class="carousel-inner">
+        {% for disco in discos_destacados %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            {% if disco.imagen %}<img src="{{ disco.imagen.url }}" class="d-block w-100"
+                 alt="Portada de {{ disco.titulo }}">
+            {% endif %}
+            <div class="carousel-caption">
+                <h5 class="mb-1">{{ disco.titulo }}</h5>
+                <p class="mb-0">{{ disco.artista }} · ${{ disco.precio }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carruselDiscos" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carruselDiscos" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
+
+<div class="row align-items-end mb-4">
+    <div class="col">
+        <p class="newmix-eyebrow mb-1">Selección</p>
+        <h2 class="section-title">Artistas destacados</h2>
+    </div>
+    <div class="col-auto">
+        <a href="{% url 'artistas_catalogo' %}" class="btn btn-outline-newmix">Ver todos</a>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    {% for artista in artistas_destacados %}
+    <div class="col-md-4">
+        <a href="{% url 'artistas_detalle' artista.id %}" class="text-decoration-none text-reset">
+            <div class="card-newmix h-100">
+                {% if artista.imagen %}<img src="{{ artista.imagen.url }}" alt="Foto de {{ artista.nombre }}">{% endif %}
+                <div class="card-body">
+                    <span class="badge-genero mb-2 d-inline-block">{{ artista.genero }}</span>
+                    <h5 class="card-title mb-1">{{ artista.nombre }}</h5>
+                    <p class="text-body-secondary mb-0">{{ artista.pais }} · desde {{ artista.anio_formacion }}</p>
+                </div>
+            </div>
+        </a>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="row g-4 align-items-stretch">
+    <div class="col-md-6">
+        <div class="card-newmix p-4 h-100">
+            <p class="newmix-eyebrow mb-2">Sección 1</p>
+            <h3 class="mb-2">Artistas</h3>
+            <p class="text-body-secondary">
+                Biografías, país de origen y trayectoria de cada artista del sello. Filtra por
+                género y entra a la ficha de cada uno.
+            </p>
+            <a href="{% url 'artistas_inicio' %}" class="btn btn-newmix mt-2 align-self-start">Explorar artistas</a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card-newmix p-4 h-100">
+            <p class="newmix-eyebrow mb-2">Sección 2</p>
+            <h3 class="mb-2">Tienda de discos</h3>
+            <p class="text-body-secondary">
+                Catálogo de venta con precio, formato (vinilo, CD o cassette) y stock disponible
+                de cada lanzamiento.
+            </p>
+            <a href="{% url 'discos_catalogo' %}" class="btn btn-newmix mt-2 align-self-start">Ir a la tienda</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

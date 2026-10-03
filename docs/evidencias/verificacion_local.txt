@@ -1,0 +1,134 @@
+Verificación local de Feria NewMix
+Fecha: 2026-10-03T08:39:40-03:00
+Entorno: .venv\Scripts\python.exe
+Alcance: comprobaciones locales; pruebas Django con base temporal.
+
+Actualización del 3 de octubre de 2026: precio automático al registrar venta.
+Comando: .\.venv\Scripts\python.exe manage.py test --noinput
+Código de salida: 0
+Ran 51 tests in 4.537s
+OK
+System check identified no issues (0 silenced).
+Navegador: ficha de AM -> Registrar venta -> disco AM precargado y precio21990.
+Cambio de selección: Favourite Worst Nightmare -> precio13990; AM -> precio21990.
+Las comprobaciones de formulario/servidor incluyen precio POST manipulado u omitido,
+precio histórico al editar el mismo disco, cambio de disco, errores de stock y Admin.
+Captura real: docs/evidencias/18_precio_automatico.jpg.
+La prueba en navegador sólo seleccionó discos; no creó ni modificó ventas reales.
+
+Resultados de la verificación inicial anteriores al ajuste:
+
+Comando: .\.venv\Scripts\python.exe manage.py check
+Código de salida: 0
+System check identified no issues (0 silenced).
+
+Comando: .\.venv\Scripts\python.exe manage.py makemigrations --check --dry-run
+Código de salida: 0
+No changes detected
+
+Comando: .\.venv\Scripts\python.exe manage.py test --noinput
+Código de salida: 0
+Creating test database for alias 'default'...
+
+...........................................
+----------------------------------------------------------------------
+Ran 43 tests in 3.726s
+
+OK
+Destroying test database for alias 'default'...
+
+Found 43 test(s).
+System check identified no issues (0 silenced).
+Perfil Administrador: 24 permisos.
+Perfil Operador: 12 permisos.
+Perfil Consulta: 4 permisos.
+Perfil Administrador: 24 permisos.
+Perfil Operador: 12 permisos.
+Perfil Consulta: 4 permisos.
+
+Comando: .\.venv\Scripts\python.exe scripts/smoke_test.py
+Repetido tras limpieza de datos de demostración por el coordinador: 2026-10-03T08:40:31-03:00
+Código de salida: 0
+OK: El acceso anónimo solicita iniciar sesión
+OK: /
+OK: /artistas/
+OK: /artistas/catalogo/
+OK: /artistas/lista/
+OK: /discos/
+OK: /discos/catalogo/
+OK: /discos/lista/
+OK: /ventas/clientes/
+OK: /ventas/
+OK: Hay registros de artistas
+OK: Detalle de artistas
+OK: Imagen artistas/arcticmonkeys.jpg
+OK: Imagen artistas/badbunny.jpg
+OK: Imagen artistas/gorillaz.jpg
+OK: Imagen artistas/joji.jpg
+OK: Imagen artistas/kendricklamar.jpg
+OK: Imagen artistas/michael.jpg
+OK: Imagen artistas/nirvana.jpg
+OK: Imagen artistas/system.jpg
+OK: Imagen artistas/thecure.jpg
+OK: Imagen artistas/killers.jpg
+OK: Imagen artistas/smiths.jpg
+OK: Imagen artistas/strokes.jpg
+OK: Imagen artistas/tylerthecreator.jpg
+OK: Hay registros de discos
+OK: Detalle de discos
+OK: Imagen discos/arcticmonkeys_1.jpg
+OK: Imagen discos/stroke_2.jpg
+OK: Imagen discos/michael_2.jpg
+OK: Imagen discos/killers_1.jpg
+OK: Imagen discos/kendricklamar_1.jpg
+OK: Imagen discos/tylerthecreator_2.jpg
+OK: Imagen discos/michael_3.jpg
+OK: Imagen discos/badbunny_1.jpg
+OK: Imagen discos/gorillaz_1.jpg
+OK: Imagen discos/killers_3.jpg
+OK: Imagen discos/thecure_1.jpg
+OK: Imagen discos/badbunny_3.jpg
+OK: Imagen discos/arcticmonkeys_2.jpg
+OK: Imagen discos/tylerthecreator_1.jpg
+OK: Imagen discos/gorillaz_3.jpg
+OK: Imagen discos/thecure_3.jpg
+OK: Imagen discos/smiths_1.jpg
+OK: Imagen discos/system_3.jpg
+OK: Imagen discos/killers_2.jpg
+OK: Imagen discos/nirvana_2.jpg
+OK: Imagen discos/nirvana_3.jpg
+OK: Imagen discos/stroke_3.jpg
+OK: Imagen discos/smiths_2.jpg
+OK: Imagen discos/system_2.jpg
+OK: Imagen discos/michael_1.jpg
+OK: Imagen discos/joji_2.jpg
+OK: Imagen discos/nirvana_1.jpg
+OK: Imagen discos/joji_3.jpg
+OK: Imagen discos/gorillaz_2.jpg
+OK: Imagen discos/joji_1.jpg
+OK: Imagen discos/stroke_1.jpg
+OK: Imagen discos/smiths_3.jpg
+OK: Imagen discos/kendricklamar_2.jpg
+OK: Imagen discos/system_1.jpg
+OK: Imagen discos/badbunny_2.jpg
+OK: Imagen discos/thecure_2.jpg
+OK: Imagen discos/kendricklamar_3.jpg
+OK: Archivo estático css/bootstrap.min.css
+OK: Archivo estático css/estilo.css
+OK: Archivo estático js/bootstrap.bundle.min.js
+Comprobación rápida terminada.
+
+Comando: .\.venv\Scripts\python.exe -m pip check
+Código de salida: 0
+No broken requirements found.
+
+Revisión acotada de documentación:
+README describe modelos, permisos, archivos, preparación y límites coherentes con la implementación revisada.
+La guía de EC2 presenta pasos propuestos, sin afirmar despliegue realizado. TRUST_PROXY_HEADERS se limita al proxy NGINX documentado, con Gunicorn privado.
+
+Limitaciones:
+Estas comprobaciones no verifican GitHub, EC2, MySQL ni phpMyAdmin.
+El smoke test comprueba rutas mediante Django Client y existencia de imágenes y estáticos en disco; no demuestra servicio HTTP real de archivos ni revisión visual del navegador.
+El smoke test utiliza un administrador existente y crea/cierra una sesión local; no crea datos de catálogo ni modifica clientes o ventas.
+No se ejecutaron migraciones sobre la base local en esta revisión.
+No se modificó código durante esta revisión.
