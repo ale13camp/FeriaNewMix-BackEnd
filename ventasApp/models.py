@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.validators import MinValueValidator
 from django.core.exceptions import ValidationError
 from django.db import models, transaction
@@ -7,6 +8,10 @@ from discosApp.models import Disco
 
 
 class Cliente(models.Model):
+    usuario = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL,
+        related_name="cliente", null=True, blank=True,
+    )
     nombre = models.CharField(max_length=150)
     correo = models.EmailField()
     telefono = models.CharField("teléfono", max_length=30, blank=True)

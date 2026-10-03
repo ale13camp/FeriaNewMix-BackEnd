@@ -93,6 +93,30 @@ class DiscosTests(TestCase):
         self.assertEqual(len(self.client.get(reverse("discos_lista"), {"q": "inexistente"}).context["discos"]), 0)
         self.assertEqual(self.client.post(reverse("discos_crear"), {}).status_code, 403)
 
+    def test_precio_exige_sesion_y_permiso_para_ver_disco(self):
+        disco = models.Disco.objects.create(**self.datos())
+        url = f"/discos/precio/{disco.pk}/"
+        self.assertEqual(self.client.get(url).status_code, 302)
+        usuario = User.objects.create_user("sin_permiso")
+        self.client.force_login(usuario)
+        self.assertEqual(self.client.get(url).status_code, 403)
+        usuario.user_permissions.add(Permission.objects.get(codename="view_disco"))
+        self.assertEqual(self.client.get(url).json(), {"precio": "1000"})
+
+    def test_precio_devuelve_valor_actual_y_rechaza_escritura(self):
+        disco = models.Disco.objects.create(**self.datos())
+        usuario = User.objects.create_user("consulta_precio")
+        usuario.user_permissions.add(Permission.objects.get(codename="view_disco"))
+        self.client.force_login(usuario)
+        url = f"/discos/precio/{disco.pk}/"
+        self.assertEqual(self.client.get(url).status_code, 200)
+        models.Disco.objects.filter(pk=disco.pk).update(precio=21990)
+        self.assertEqual(self.client.get(url).json(), {"precio": "21990"})
+        self.assertEqual(self.client.post(url, {"precio": 1}).status_code, 405)
+        disco.refresh_from_db()
+        self.assertEqual(disco.precio, 21990)
+        self.assertEqual(self.client.get("/discos/precio/999999/").status_code, 404)
+
     def test_origen_y_listas_sin_discos(self):
         self.datos()
         usuario = User.objects.create_user("consulta")

@@ -1,4 +1,5 @@
 from django import forms
+from django.urls import reverse
 from .models import Cliente, Venta
 
 
@@ -27,6 +28,7 @@ class VentaForm(forms.ModelForm):
         disco_original = self.instance.disco_id if self.instance.pk else None
         precio_original = self.instance.precio_unitario
         self.fields["disco"].queryset = self.fields["disco"].queryset.select_related("artista")
+        self.fields["disco"].widget.attrs["data-precio-url"] = reverse("discos_precio", args=[0])
         precio = self.fields["precio_unitario"]
         # Django ignora el precio enviado y utiliza el calculado aquí.
         precio.disabled = True

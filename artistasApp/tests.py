@@ -59,7 +59,8 @@ class CatalogoTests(TestCase):
         self.modelo_artista()
         usuario = User.objects.create_user("consulta", password="Prueba123!")
         usuario.user_permissions.add(*Permission.objects.filter(codename__in=["view_artista", "view_disco"]))
-        for nombre in ["home", "artistas_inicio", "artistas_catalogo", "artistas_lista"]:
+        self.assertContains(self.client.get(reverse("home")), "Registrarme como cliente")
+        for nombre in ["artistas_inicio", "artistas_catalogo", "artistas_lista"]:
             self.assertEqual(self.client.get(reverse(nombre)).status_code, 302)
         self.client.force_login(usuario)
         for nombre in ["home", "artistas_inicio", "artistas_catalogo", "artistas_lista"]:

@@ -17,7 +17,7 @@ El apoyo se aplica en las siguientes partes del proyecto:
 - Modelos Cliente y Venta y relación ForeignKey con Disco.
 - Formularios ModelForm y CRUD de las entidades.
 - Ajuste de stock y conservación del precio de cada venta.
-- Grupos Administrador, Operador y Consulta, permisos de vistas y menú.
+- Grupos Administrador, Operador, Consulta y Cliente, permisos de vistas y menú.
 - Carga de imágenes y documentos y acceso protegido al PDF.
 - Configuración `.env`, importación del catálogo y guía de despliegue.
 
@@ -27,7 +27,13 @@ No se registran como terminados el despliegue EC2, la conexión MySQL o las prue
 
 El usuario pidió: «En registrar venta, el precio que sale en el disco que salga exacto en el precio unitario». Después indicó: «trabaja en el repositorio de FeriaNewMix-BackEnd».
 
-Se ajustó el formulario para completar el precio con el disco seleccionado, precargarlo desde su ficha y tomar el valor del catálogo en el servidor. La comprobación en el navegador mostró AM con 21990 y Favourite Worst Nightmare con 13990. La suite completa aprobó 51 pruebas. La captura `evidencias/18_precio_automatico.jpg` muestra el formulario actualizado. Las ventas anteriores conservan su precio histórico al editar el mismo disco.
+Se ajustó el formulario para completar el precio con el disco seleccionado, precargarlo desde su ficha y tomar el valor del catálogo en el servidor. Una consulta GET protegida actualiza el precio también cuando se agrega o edita un disco desde el Admin. La comprobación en el navegador mostró AM con 21990 y Favourite Worst Nightmare con 13990. La suite completa aprobó 53 pruebas. La captura `evidencias/18_precio_automatico.jpg` muestra el formulario actualizado. Las ventas anteriores conservan su precio histórico al editar el mismo disco.
+
+## Registro y compras solicitados el 3 de octubre de 2026
+
+El usuario pidió: «En el inicio agrega un registro para cliente nuevo, en donde pueda tener acceso para comprar dentro de la pagina». Ante la pregunta de si la compra debía registrar la venta y descontar stock sin cobro real, respondió: «Sí, registrar compra y descontar stock».
+
+Se añadió registro mediante UserCreationForm, cuenta vinculada al Cliente, inicio de sesión automático y un grupo Cliente con dos permisos de lectura del catálogo. La compra obtiene cliente, disco, fecha y precio desde el servidor; sólo recibe la cantidad del formulario. Mis compras filtra los registros de la cuenta. La suite aprobó 73 pruebas. En el navegador se comprobó una compra técnica de dos unidades de AM: precio unitario 21990, total 43980 y stock de 5 a 3. Esa compra y su cuenta de verificación se retiraron después; el stock volvió a 5 y se conservaron las ventas previas. Las capturas 19 a 22 documentan inicio, registro, confirmación e historial. No se incorporó un cobro real.
 
 ## Evidencia anterior conservada
 

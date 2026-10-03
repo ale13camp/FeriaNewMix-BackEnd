@@ -1,6 +1,6 @@
 # Feria NewMix: catálogo y ventas de discos
 
-Este proyecto amplía el prototipo de Feria NewMix. Permite administrar artistas, discos y clientes, y registrar ventas que relacionan un cliente con un disco. Usa Django ORM, formularios, plantillas y permisos de usuario.
+Este proyecto amplía el prototipo de Feria NewMix. Permite administrar artistas, discos y clientes, y registrar ventas que relacionan un cliente con un disco. Un cliente nuevo puede crear su cuenta, comprar un disco y consultar sus propias compras. Usa Django ORM, formularios, plantillas y permisos de usuario.
 
 Los mantenedores que participan en la transacción son **Cliente** y **Disco**. **Venta** guarda sus llaves foráneas. **Artista** conserva la información del catálogo original y se relaciona con Disco.
 
@@ -20,7 +20,7 @@ En este equipo ya están preparados `.venv`, `.env` y la base local. Desde esta 
 
 Abrir `http://127.0.0.1:8000/`. Los accesos de prueba están en `.evaluacion/ACCESO_LOCAL.txt`, un archivo privado que no se sube a GitHub. Para detener el servidor iniciado en la terminal, presionar `Ctrl+C`. Esta preparación es local; en otro equipo se siguen las instrucciones de instalación siguientes.
 
-La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas, revisión de migraciones y dependencias, y comprobación de rutas y 50 imágenes. Después del ajuste del precio automático de venta, la suite completa aprobó 51 pruebas. Los resultados están en `docs/evidencias/verificacion_local.txt`. El despliegue en EC2 sigue pendiente de acceso.
+La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas. El ajuste del precio automático amplió la suite a 53; con el registro de clientes y las compras se aprobaron 73 pruebas. También se comprobaron las migraciones, rutas, 50 imágenes y el flujo de compra en el navegador. Los resultados están en `docs/evidencias/verificacion_local.txt`. El proyecto está publicado en GitHub; el despliegue en EC2 sigue pendiente de acceso.
 
 ## Estructura
 
@@ -28,8 +28,8 @@ La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas, revisión 
 config/          Configuración, rutas generales y WSGI.
 artistasApp/     Modelo Artista, formularios, vistas, rutas y Admin.
 discosApp/       Modelo Disco, catálogo, archivos e importación inicial.
-ventasApp/       Modelos Cliente y Venta, formularios, CRUD y stock.
-usuariosApp/     Comando para crear los tres grupos de permisos.
+ventasApp/       Modelos Cliente y Venta, CRUD, stock, compra e historial propio.
+usuariosApp/     Registro de clientes y creación de cuatro grupos de permisos.
 templates/       Base común, formularios, listas, confirmación y login.
 static/          Bootstrap, CSS e imágenes originales.
 media/           Imágenes cargadas; se crea al utilizar la aplicación.
@@ -83,7 +83,7 @@ El PDF `4 creando el modelo.pdf`, pp. 1–8, presenta MySQL/phpMyAdmin, modelos,
 |---|---|---|
 | Artista | Nombre, género, país, año de formación, integrantes, biografía e imagen | Un artista puede tener varios discos. |
 | Disco | Título, género, año, formato, precio, stock, descripción, imagen y documento | Pertenece a un artista. |
-| Cliente | Nombre, correo y teléfono opcional | Puede tener varias ventas. |
+| Cliente | Nombre y correo; teléfono y cuenta de usuario opcionales | Puede tener varias ventas; una cuenta corresponde a un cliente. |
 | Venta | Fecha, cantidad y precio unitario | Tiene un cliente y un disco. |
 
 Los precios se expresan en pesos chilenos con `DecimalField` y sin decimales. El total de la venta se calcula como cantidad por precio unitario. El precio de la venta queda guardado, de modo que una modificación posterior del precio del disco no modifica ventas anteriores.
@@ -182,8 +182,15 @@ El PDF `10 Inicio de sesión y permisos.pdf`, pp. 1–7, explica autenticación 
 | Administrador | Sí | Sí | Sí | Sí, con restricciones de relaciones | Sí, desde Admin con `is_staff` |
 | Operador | Sí | Sí | Sí | No | No |
 | Consulta | Sí | No | No | No | No |
+| Cliente | Catálogo y sus propias compras | Su compra | No | No | No |
 
 El menú y los botones dependen de permisos. Las vistas verifican los permisos en el servidor, incluso si alguien escribe una URL directamente. La restricción por sesión con `login_required` es una decisión de implementación adicional; no se atribuye a la captura del PDF 10.
+
+El inicio es público y muestra **Registrarme como cliente**. El formulario `/cuentas/registro/` solicita usuario, nombre, correo, teléfono opcional y contraseña con confirmación. Django valida la contraseña; la cuenta y el Cliente se guardan juntos. El registro inicia la sesión y asigna únicamente el grupo Cliente, sin acceso al Admin ni al CRUD general.
+
+El cliente entra a la tienda, abre la ficha del disco y selecciona **Comprar**. Sólo ingresa la cantidad. El servidor toma su cliente, el disco de la ficha, la fecha y el precio vigente del catálogo. **Confirmar compra** registra una Venta y descuenta stock; una cantidad inválida o sin stock suficiente se rechaza. El total mostrado cambia con la cantidad. **Mis compras** muestra únicamente las ventas de su cuenta, sin edición ni eliminación. No hay carrito ni cobro real en línea, según lo confirmado por el usuario.
+
+Los clientes creados antes de esta ampliación conservan sus datos y pueden seguir usándose en ventas administrativas aunque no tengan una cuenta vinculada. En otras instalaciones hay que ejecutar `python manage.py migrate` y `python manage.py crear_perfiles` para aplicar la migración y preparar el nuevo grupo.
 
 ## Ejecutar y revisar localmente
 
@@ -204,7 +211,7 @@ python manage.py makemigrations --check --dry-run
 python manage.py test
 ```
 
-Para la demostración presencial: revisar CRUD y búsquedas en las cuatro entidades, los tres perfiles, una carga de imagen/PDF y una venta con ajuste de stock. Confirmar los mismos registros y relaciones en phpMyAdmin conectado al MySQL de EC2.
+Para la demostración presencial: revisar CRUD y búsquedas en las cuatro entidades, los cuatro perfiles, una carga de imagen/PDF y una venta con ajuste de stock. Mostrar también registro de cliente, compra e historial propio. Confirmar los mismos registros y relaciones en phpMyAdmin conectado al MySQL de EC2.
 
 ## Documentación y requisitos externos
 
@@ -212,4 +219,4 @@ Para la demostración presencial: revisar CRUD y búsquedas en las cuatro entida
 - [Fuentes y decisiones](docs/fuentes.md): material de clases por archivo y página, y decisiones añadidas.
 - [Uso de IA](docs/uso_ia.md): prompt real de esta conversación y resumen de su aplicación.
 
-Faltan las direcciones concretas de GitHub y EC2, el usuario SSH y la ruta local de la clave privada para verificar el despliegue. No se debe completar la sección de evidencias con capturas o resultados supuestos.
+GitHub está confirmado en el repositorio enlazado al inicio. Faltan la dirección de la instancia EC2, el usuario SSH y el acceso al laboratorio para verificar el despliegue. No se debe completar la sección de evidencias con capturas o resultados supuestos.

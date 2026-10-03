@@ -12,8 +12,6 @@ from artistasApp.models import Artista
 from discosApp.models import Disco
 
 
-@login_required
-@permission_required(["artistasApp.view_artista", "discosApp.view_disco"], raise_exception=True)
 def home(request):
     artistas = Artista.objects.all()
     discos_destacados = []

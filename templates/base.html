@@ -29,16 +29,19 @@
             </button>
             <div class="collapse navbar-collapse" id="navNewmix">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3">
-                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'home' %}">Inicio</a>
                     </li>
+                    {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'artistas_inicio' %}">Artistas</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'discos_catalogo' %}">Tienda de discos</a>
                     </li>
+                    {% if user.cliente %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'compras_lista' %}">Mis compras</a></li>
+                    {% else %}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
                         <ul class="dropdown-menu">
@@ -49,9 +52,11 @@
                             {% if user.is_staff and perms.auth.view_user %}<li><hr class="dropdown-divider"></li><li><a class="dropdown-item" href="{% url 'admin:auth_user_changelist' %}">Usuarios y perfiles</a></li>{% endif %}
                         </ul>
                     </li>
+                    {% endif %}
                     <li class="nav-item d-flex align-items-center"><span class="small text-white">{{ user.username }}</span></li>
                     <li class="nav-item"><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="btn btn-outline-light btn-sm" type="submit">Cerrar sesión</button></form></li>
                     {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'registro' %}">Registrarse</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesión</a></li>
                     {% endif %}
                 </ul>

@@ -10,6 +10,7 @@ urlpatterns = [
     path("artistas/", include("artistasApp.urls")),
     path("discos/", include("discosApp.urls")),
     path("ventas/", include("ventasApp.urls")),
+    path("cuentas/", include("usuariosApp.urls")),
     path("cuentas/", include("django.contrib.auth.urls")),
     path("", home, name="home"),
 ]

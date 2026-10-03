@@ -1,10 +1,11 @@
 from django.contrib.auth.models import Group, Permission
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from usuariosApp.perfiles import crear_grupo_cliente
 
 
 class Command(BaseCommand):
-    help = "Crea o actualiza los permisos de Administrador, Operador y Consulta."
+    help = "Crea o actualiza los perfiles Administrador, Operador, Consulta y Cliente."
 
     @transaction.atomic
     def handle(self, *args, **options):
@@ -25,3 +26,5 @@ class Command(BaseCommand):
                 ))
             grupo.permissions.set(seleccion)
             self.stdout.write(self.style.SUCCESS(f"Perfil {nombre}: {len(seleccion)} permisos."))
+        cliente = crear_grupo_cliente()
+        self.stdout.write(self.style.SUCCESS(f"Perfil Cliente: {cliente.permissions.count()} permisos."))

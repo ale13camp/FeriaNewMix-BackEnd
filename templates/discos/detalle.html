@@ -49,6 +49,7 @@
                 </span>
             </div>
             {% if perms.ventasApp.add_venta and disco.stock %}<a href="{% url 'ventas_crear' %}?disco={{ disco.pk }}" class="btn btn-newmix w-100">Registrar venta</a>{% endif %}
+            {% if user.cliente and disco.stock %}<a href="{% url 'compra_crear' disco.pk %}" class="btn btn-newmix w-100">Comprar</a>{% endif %}
             {% if disco.documento %}<a href="{% url 'discos_documento' disco.pk %}" class="btn btn-outline-newmix w-100 mt-2">Descargar documento PDF</a>{% endif %}
         </div>
 

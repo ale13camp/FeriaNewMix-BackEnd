@@ -21,7 +21,9 @@ def comprobar(condicion, texto):
 
 with override_settings(ALLOWED_HOSTS=["localhost", "testserver"]):
     cliente = Client()
-    comprobar(cliente.get("/").status_code == 302, "El acceso anónimo solicita iniciar sesión")
+    comprobar(cliente.get("/").status_code == 200, "El inicio público permite acceder al registro de cliente")
+    comprobar(cliente.get("/cuentas/registro/").status_code == 200, "El registro de cliente está disponible")
+    comprobar(cliente.get("/discos/catalogo/").status_code == 302, "El catálogo solicita iniciar sesión")
     usuario = next((u for u in User.objects.filter(is_active=True, is_staff=True)
                     if u.has_perms(["artistasApp.view_artista", "discosApp.view_disco", "ventasApp.view_cliente", "ventasApp.view_venta"])), None)
     if usuario is None:

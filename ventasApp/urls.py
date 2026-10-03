@@ -1,8 +1,10 @@
 from django.urls import path
-from . import views
+from . import views, views_compra
 
 
 urlpatterns = [
+    path("mis-compras/", views_compra.compras_lista, name="compras_lista"),
+    path("comprar/<int:disco_id>/", views_compra.compra_crear, name="compra_crear"),
     path("", views.ventas_lista, name="ventas_lista"),
     path("nueva/", views.ventas_crear, name="ventas_crear"),
     path("<int:pk>/editar/", views.ventas_editar, name="ventas_editar"),

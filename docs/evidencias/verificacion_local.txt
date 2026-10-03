@@ -3,18 +3,52 @@ Fecha: 2026-10-03T08:39:40-03:00
 Entorno: .venv\Scripts\python.exe
 Alcance: comprobaciones locales; pruebas Django con base temporal.
 
+Actualización posterior del 3 de octubre de 2026: registro de clientes y compras.
+Comando: .\.venv\Scripts\python.exe manage.py test --noinput
+Código de salida: 0
+Ran 73 tests in 6.476s
+OK
+manage.py check: System check identified no issues (0 silenced).
+makemigrations --check --dry-run: No changes detected.
+Base local respaldada antes de aplicar ventasApp.0002_cliente_usuario; migración OK.
+crear_perfiles: Administrador24, Operador12, Consulta4, Cliente2 permisos.
+Smoke test: inicio y registro públicos, catálogo protegido, rutas y 50 imágenes OK.
+HTTP real: inicio y registro200.
+Navegador: inicio público -> registro -> acceso con cuenta técnica existente ->
+ficha AM -> Comprar -> cantidad2; total mostrado43980 actualizado.
+Confirmar compra -> Mis compras muestra solamente el registro de esa cuenta.
+Base comprobada: precio21990, cantidad2, total43980, stock5 ->3.
+Cuenta y compra técnicas retiradas con los métodos del modelo: stock restaurado a5;
+se conservaron las ventas previas y los datos existentes del usuario.
+Capturas reales: 19_inicio_registro.png, 20_formulario_registro.png,
+21_confirmar_compra.png y 22_mis_compras.png.
+Revisión independiente: permisos, privacidad y rechazo de datos POST manipulados.
+El total visual señalado por esa revisión se corrigió y comprobó en navegador.
+No se realizó un cobro en línea.
+
 Actualización del 3 de octubre de 2026: precio automático al registrar venta.
 Comando: .\.venv\Scripts\python.exe manage.py test --noinput
 Código de salida: 0
-Ran 51 tests in 4.537s
+Ran 53 tests in 4.040s
 OK
 System check identified no issues (0 silenced).
 Navegador: ficha de AM -> Registrar venta -> disco AM precargado y precio21990.
 Cambio de selección: Favourite Worst Nightmare -> precio13990; AM -> precio21990.
 Las comprobaciones de formulario/servidor incluyen precio POST manipulado u omitido,
 precio histórico al editar el mismo disco, cambio de disco, errores de stock y Admin.
+Consulta de precio: GET protegido por sesión y permiso view_disco; no admite POST.
+Revisión independiente: 6 comprobaciones JavaScript correctas, incluyendo evento
+nativo, Admin, histórico, respuestas fuera de orden y fallo de red con fallback.
 Captura real: docs/evidencias/18_precio_automatico.jpg.
 La prueba en navegador sólo seleccionó discos; no creó ni modificó ventas reales.
+
+GitHub: https://github.com/ale13camp/FeriaNewMix-BackEnd
+Primera publicación completa en main: bf00c3da43d1e1df53fa3a0bebdfd0728a4fecfb.
+Árbol de esa publicación verificado idéntico al commit local preparado:
+4b74de7b7a5eaf104c05c393877752929e2c7952, 154 archivos.
+Comprobaciones: conector actualizó main sin force, git fetch y git ls-remote.
+La consulta del precio desde Admin y el registro/compra fueron comprobados localmente.
+EC2, clonación en la instancia, MySQL y phpMyAdmin siguen pendientes de verificación.
 
 Resultados de la verificación inicial anteriores al ajuste:
 
