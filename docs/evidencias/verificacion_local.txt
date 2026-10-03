@@ -48,6 +48,14 @@ Primera publicación completa en main: bf00c3da43d1e1df53fa3a0bebdfd0728a4fecfb.
 4b74de7b7a5eaf104c05c393877752929e2c7952, 154 archivos.
 Comprobaciones: conector actualizó main sin force, git fetch y git ls-remote.
 La consulta del precio desde Admin y el registro/compra fueron comprobados localmente.
+Publicación de registro, compra y precio desde Admin en main:
+0440b5f729c444388853af17cc7162bc1712a4a1.
+Árbol195b362721c81cf5b8cae0fd3c3d2dad6a27efac idéntico al commit local;
+37 archivos actualizados o añadidos. update_ref sin force, fetch y ls-remote OK.
+El documento técnico actualizado se publica después de su revisión visual.
+Documento técnico final verificado con Word y revisión visual de todas las páginas:
+12 páginas, 10 tablas, 9 capturas y títulos sin plegado.
+SHA25699D6FA24E26C318FD170A57BA7E19931CF72A3F9ADB6B2637CCFA5BD300E3624.
 EC2, clonación en la instancia, MySQL y phpMyAdmin siguen pendientes de verificación.
 
 Resultados de la verificación inicial anteriores al ajuste:
