@@ -6,6 +6,7 @@ from artistasApp.views import home
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("api/", include("discosApi.urls")),
     #   path('lo_que_escribe_el_usuario_en_la_url',función_dentro_vista)
     path("artistas/", include("artistasApp.urls")),
     path("discos/", include("discosApp.urls")),

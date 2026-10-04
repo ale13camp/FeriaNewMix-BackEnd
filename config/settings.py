@@ -1,4 +1,5 @@
 from pathlib import Path
+from datetime import timedelta
 import os
 from dotenv import load_dotenv
 from django.core.exceptions import ImproperlyConfigured
@@ -37,6 +38,9 @@ INSTALLED_APPS = [
     "discosApp",
     "ventasApp",
     "usuariosApp",
+    "rest_framework",
+    "drf_spectacular",
+    "discosApi",
 ]
 
 MIDDLEWARE = [
@@ -150,3 +154,25 @@ SECURE_PROXY_SSL_HEADER = (
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# La API usa JWT; las vistas web conservan su autenticación por sesión.
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication"],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated", "discosApi.permissions.PermisoGrupoApi"],
+    "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "EXCEPTION_HANDLER": "discosApi.exceptions.excepcion_api",
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "API Feria New Mix",
+    "DESCRIPTION": "API de clientes, discos y ventas. JWT y permisos por grupos Django. Ejemplos ficticios para pruebas.",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "COMPONENT_SPLIT_REQUEST": True,
+}

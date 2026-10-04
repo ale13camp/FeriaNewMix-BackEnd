@@ -1,6 +1,6 @@
 # Feria NewMix: catálogo y ventas de discos
 
-Este proyecto amplía el prototipo de Feria NewMix. Permite administrar artistas, discos y clientes, y registrar ventas que relacionan un cliente con un disco. Un cliente nuevo puede crear su cuenta, comprar un disco y consultar sus propias compras. Usa Django ORM, formularios, plantillas y permisos de usuario.
+Este proyecto amplía el prototipo de Feria NewMix. Permite administrar artistas, discos y clientes, y registrar ventas que relacionan un cliente con un disco. Un cliente nuevo puede crear su cuenta, comprar un disco y consultar sus propias compras. Usa Django ORM, formularios, plantillas y permisos de usuario. La ampliación de la Sumativa 3 agrega una API REST con Django REST Framework, autenticación JWT y documentación Swagger/OpenAPI sobre los mismos modelos.
 
 Los mantenedores que participan en la transacción son **Cliente** y **Disco**. **Venta** guarda sus llaves foráneas. **Artista** conserva la información del catálogo original y se relaciona con Disco.
 
@@ -8,7 +8,7 @@ El catálogo de origen contiene 13 artistas, 37 discos y sus 50 imágenes. Los J
 
 Repositorio del proyecto: [ale13camp/FeriaNewMix-BackEnd](https://github.com/ale13camp/FeriaNewMix-BackEnd).
 
-La evaluación exige EC2 y verificación desde phpMyAdmin. La existencia del código y las instrucciones de despliegue no demuestra esos requisitos. La configuración local con SQLite es provisional y no equivale a una conexión MySQL verificada.
+La evaluación exige EC2 y verificación de la base remota. La existencia del código y las instrucciones de despliegue no demuestra esos requisitos. La configuración local con SQLite es provisional y no equivale a una conexión MySQL verificada. AWS está aplazado en esta etapa: se registró acceso inicial, clonación y preparación del entorno en EC2, pero siguen pendientes la base, migraciones, servicios y demostración remota de la web y la API.
 
 ## Abrir la copia local preparada
 
@@ -20,7 +20,7 @@ En este equipo ya están preparados `.venv`, `.env` y la base local. Desde esta 
 
 Abrir `http://127.0.0.1:8000/`. Los accesos de prueba están en `.evaluacion/ACCESO_LOCAL.txt`, un archivo privado que no se sube a GitHub. Para detener el servidor iniciado en la terminal, presionar `Ctrl+C`. Esta preparación es local; en otro equipo se siguen las instrucciones de instalación siguientes.
 
-La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas. El ajuste del precio automático amplió la suite a 53; el registro y las compras, a 73; y las mejoras del perfil y filtros, a 94. También se comprobaron las migraciones, rutas, 50 imágenes y los recorridos de cliente en el navegador. Los resultados están en `docs/evidencias/verificacion_local.txt`. El proyecto está publicado en GitHub; el despliegue en EC2 sigue pendiente de acceso.
+La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas. El ajuste del precio automático amplió la suite a 53; el registro y las compras, a 73; y las mejoras del perfil y filtros, a 94. También se comprobaron las migraciones, rutas, 50 imágenes y los recorridos de cliente en el navegador. Los resultados históricos están en `docs/evidencias/verificacion_local.txt`. El 4 de octubre se repitieron las 94 pruebas antes de la ampliación de la API y aprobaron. La ampliación agrega 35 pruebas API: aprobaron las 129 pruebas totales, `check`, la revisión de migraciones y la validación del esquema OpenAPI sin advertencias. Los resultados y límites están en [API Sumativa 3](docs/API_Sumativa3.md). El repositorio de la web está publicado en GitHub; esto no afirma que la ampliación de la API o el despliegue remoto ya se hayan publicado.
 
 ## Estructura
 
@@ -28,13 +28,14 @@ La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas. El ajuste 
 config/          Configuración, rutas generales y WSGI.
 artistasApp/     Modelo Artista, formularios, vistas, rutas y Admin.
 discosApp/       Modelo Disco, catálogo, archivos e importación inicial.
+discosApi/       Serializers, permisos por rol, vistas REST, rutas y pruebas API.
 ventasApp/       Modelos Cliente y Venta, CRUD, stock, compra e historial propio.
 usuariosApp/     Registro de clientes y creación de cuatro grupos de permisos.
 templates/       Base común, formularios, listas, confirmación y login.
 static/          Bootstrap, CSS e imágenes originales.
 media/           Imágenes cargadas; se crea al utilizar la aplicación.
 privados/        Documentos PDF; acceso mediante una vista protegida.
-docs/            Fuentes, uso de IA y guía de despliegue.
+docs/            Fuentes, uso de IA, guía API y guía de despliegue.
 ```
 
 `media/`, `privados/`, `.env`, bases SQLite y entornos virtuales quedan fuera de Git. Las migraciones forman parte del código que debe subirse al repositorio.
@@ -55,7 +56,7 @@ python -m pip install -r requirements.txt
 
 Si `.venv` ya funciona, basta con activarlo e instalar las dependencias. El directorio `venv` heredado puede contener una ruta a otro equipo; se utiliza `.venv` para el entorno de este trabajo. Si PowerShell restringe la activación, se pueden ejecutar los comandos con `.\.venv\Scripts\python.exe` en lugar de `python`.
 
-`requirements.txt` fija Django 5.2.17, Pillow, python-dotenv y mysqlclient 2.3.0. Gunicorn se instala en Linux. Si mysqlclient no se instala, hay que revisar las dependencias del cliente MySQL del equipo; no reemplazar el motor silenciosamente.
+`requirements.txt` fija Django 5.2.17, Pillow, python-dotenv, mysqlclient 2.3.0, Django REST Framework 3.16.1, SimpleJWT 5.5.1 y drf-spectacular 0.30.0. Gunicorn se instala en Linux. Si mysqlclient no se instala, hay que revisar las dependencias del cliente MySQL del equipo; no reemplazar el motor silenciosamente.
 
 `config/settings.py` define español de Chile y zona horaria `America/Santiago`.
 
@@ -219,10 +220,41 @@ python manage.py test
 
 Para la demostración presencial: revisar CRUD y búsquedas en las cuatro entidades, los cuatro perfiles, una carga de imagen/PDF y una venta con ajuste de stock. Mostrar también registro de cliente, compra e historial propio. Confirmar los mismos registros y relaciones en phpMyAdmin conectado al MySQL de EC2.
 
+## API REST: Sumativa 3
+
+La API usa los modelos Cliente y Disco como mantenedores, y Venta como transacción. Las vistas de la web siguen usando sesiones; las rutas de negocio de la API requieren un Access Token JWT. El token de acceso dura 5 minutos y el de renovación 1 día. Los permisos se comprueban con los grupos actuales de Django en cada petición.
+
+Con el servidor local en ejecución:
+
+| Ruta | Uso |
+|---|---|
+| `/api/clientes/` y `/api/clientes/{id}/` | Lista, alta y detalle, edición o eliminación de clientes según perfil. |
+| `/api/discos/` y `/api/discos/{id}/` | Lista, alta y detalle, edición o eliminación de discos según perfil. |
+| `/api/ventas/` y `/api/ventas/{id}/` | Consulta y operaciones de ventas; Cliente sólo compra y consulta sus registros. |
+| `/api/token/` | Obtener Access Token y Refresh Token con una cuenta propia. |
+| `/api/token/refresh/` | Obtener un nuevo Access Token a partir del Refresh Token. |
+| `/api/schema/` | Esquema OpenAPI. |
+| `/api/swagger/` | Documentación interactiva y botón Authorize. |
+| `/api/redoc/` | Documentación de lectura. |
+
+Las colecciones admiten GET y POST; el detalle admite GET, PUT y DELETE. El Administrador tiene CRUD completo, el Operador puede consultar, crear y modificar, y Consulta sólo lee. Cliente consulta el catálogo, su registro y sus compras; para comprar envía sólo `disco` y `cantidad`. Los campos sensibles se restringen según perfil. El precio del catálogo es público, mientras que los importes de las ventas son privados y sólo se retornan al Administrador.
+
+Para revisar la API sin cambiar la base local:
+
+```powershell
+python manage.py test discosApi
+python manage.py test
+python manage.py spectacular --file schema.yml --validate --fail-on-warn
+```
+
+Las pruebas crean una base temporal. Para una demostración manual que modifique datos, usar una base separada con registros identificados como prueba. No publicar tokens, contraseñas ni ejemplos con información real de clientes. La [guía técnica de la API](docs/API_Sumativa3.md) detalla instalación, JSON de ejemplo, privacidad, stock, errores, Swagger y el estado de los diez criterios de la evaluación.
+
 ## Documentación y requisitos externos
 
 - [Guía de despliegue EC2](docs/despliegue_ec2.md): pasos propuestos, ejemplos de configuración y evidencia que falta reunir.
 - [Fuentes y decisiones](docs/fuentes.md): material de clases por archivo y página, y decisiones añadidas.
 - [Uso de IA](docs/uso_ia.md): prompt real de esta conversación y resumen de su aplicación.
+- [API Sumativa 3](docs/API_Sumativa3.md): contrato de servicios, seguridad, verificación y checklist de la evaluación.
+- [Informe técnico Sumativa 3 en Word](<docs/Informe tecnico Sumativa 3 Feria NewMix.docx>): explicación de la API, capturas locales y criterios pendientes.
 
-GitHub está confirmado en el repositorio enlazado al inicio. Faltan la dirección de la instancia EC2, el usuario SSH y el acceso al laboratorio para verificar el despliegue. No se debe completar la sección de evidencias con capturas o resultados supuestos.
+GitHub está confirmado para la web en el repositorio enlazado al inicio. La preparación inicial de EC2 llegó a la clonación y al entorno virtual; todavía no demuestra una base remota operativa ni servicios publicados. El trabajo de AWS está aplazado y su criterio sigue pendiente. La guía EC2 existente contiene pasos propuestos y se conserva como referencia; no sustituye una comprobación remota ni evidencia de despliegue.

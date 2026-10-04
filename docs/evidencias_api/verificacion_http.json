@@ -1,0 +1,88 @@
+{
+  "entorno": "Local SQLite aislado con datos sintéticos",
+  "fecha": "2026-10-04",
+  "lecturas": {
+    "sin_jwt": 401,
+    "jwt_invalido": 401,
+    "Administrador": {
+      "token": 200,
+      "refresh": 200,
+      "consultas": {
+        "clientes": {
+          "codigo": 200,
+          "registros": 1
+        },
+        "discos": {
+          "codigo": 200,
+          "registros": 1
+        },
+        "ventas": {
+          "codigo": 200,
+          "registros": 1
+        }
+      }
+    },
+    "Operador": {
+      "token": 200,
+      "refresh": 200,
+      "consultas": {
+        "clientes": {
+          "codigo": 200,
+          "registros": 1
+        },
+        "discos": {
+          "codigo": 200,
+          "registros": 1
+        },
+        "ventas": {
+          "codigo": 200,
+          "registros": 1
+        }
+      }
+    },
+    "Consulta": {
+      "token": 200,
+      "refresh": 200,
+      "consultas": {
+        "clientes": {
+          "codigo": 200,
+          "registros": 1
+        },
+        "discos": {
+          "codigo": 200,
+          "registros": 1
+        },
+        "ventas": {
+          "codigo": 200,
+          "registros": 1
+        }
+      }
+    },
+    "Cliente": {
+      "token": 200,
+      "refresh": 200,
+      "consultas": {
+        "clientes": {
+          "codigo": 200,
+          "registros": 1
+        },
+        "discos": {
+          "codigo": 200,
+          "registros": 1
+        },
+        "ventas": {
+          "codigo": 200,
+          "registros": 1
+        }
+      }
+    },
+    "/": 200,
+    "/api/swagger/": 200,
+    "/api/redoc/": 200
+  },
+  "schema": {
+    "codigo": 200,
+    "rutas": 8,
+    "jwtAuth": true
+  }
+}
