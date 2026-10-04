@@ -53,6 +53,7 @@ Los ejemplos de Git y AWS explican procedimientos. No son evidencia de que el re
 6. **Importación repetible.** Los JSON originales y sus imágenes sirven como fuente de importación. No reemplazan las consultas ORM. No se crean clientes o ventas ficticios para aparentar datos reales.
 7. **SQLite provisional.** Se permite revisar localmente sin MySQL. El requisito de EC2/phpMyAdmin exige después una conexión real a MySQL y evidencia de ella; no se declara cumplido con SQLite.
 8. **Registro y compra del cliente.** Es una ampliación solicitada por el usuario. Se vincula cada cuenta a un Cliente, se valida el registro con UserCreationForm y se limita el historial a sus compras. Comprar registra una Venta y descuenta stock, sin cobro real, según su confirmación. El detalle de este flujo no se atribuye a los ejemplos de los PDF.
+9. **Perfil y búsqueda propia.** El usuario aprobó editar sus datos, cambiar contraseña y mejorar Mis compras con portadas, título y fechas. Se utilizan los datos ya existentes, un ModelForm limitado al cliente actual y PasswordChangeForm de Django. La sincronización atómica Cliente/User y la conservación de sesión son decisiones de implementación añadidas; no se presentan como temas explicados en los PDF de clase.
 
 ## Correcciones frente a ejemplos de clase
 

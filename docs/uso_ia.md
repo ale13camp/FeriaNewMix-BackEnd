@@ -35,6 +35,12 @@ El usuario pidió: «En el inicio agrega un registro para cliente nuevo, en dond
 
 Se añadió registro mediante UserCreationForm, cuenta vinculada al Cliente, inicio de sesión automático y un grupo Cliente con dos permisos de lectura del catálogo. La compra obtiene cliente, disco, fecha y precio desde el servidor; sólo recibe la cantidad del formulario. Mis compras filtra los registros de la cuenta. La suite aprobó 73 pruebas. En el navegador se comprobó una compra técnica de dos unidades de AM: precio unitario 21990, total 43980 y stock de 5 a 3. Esa compra y su cuenta de verificación se retiraron después; el stock volvió a 5 y se conservaron las ventas previas. Las capturas 19 a 22 documentan inicio, registro, confirmación e historial. No se incorporó un cobro real.
 
+## Mejoras del perfil del cliente
+
+El usuario pidió: «el perfil del cliente, siento que le faltan cosas dame ideas para agregarle». El asistente recomendó comenzar con Mi perfil, cambiar contraseña y mejorar Mis compras. El usuario respondió: «si hazlo».
+
+Se añadió edición de nombre, correo y teléfono propios, sincronización con User y cambio de contraseña validando la actual y conservando la sesión. Mis compras incorpora portadas, enlaces y búsqueda por título y fechas inclusivas. Las cuentas ajenas quedan fuera de las consultas y no se aceptan campos de privilegios enviados en el formulario. La suite completa aprobó 94 pruebas; las capturas 23 a 25 muestran los recorridos con una cuenta técnica separada. Sus datos y compras se retiraron al terminar, devolviendo el stock de prueba y conservando las ventas previas del usuario. No se cambiaron las contraseñas de sus cuentas al comprobar esta función.
+
 ## Evidencia anterior conservada
 
 El proyecto original contiene `static/IA/IA.md` e imágenes de evidencia en `static/IA/`. El archivo menciona Claude (Anthropic), modo Cowork, y contiene solicitudes sobre Bootstrap, plantillas, estilo y carrusel. Se conserva como evidencia histórica del prototipo; no se presenta como conversación de Codex ni se agregan prompts atribuidos a ese trabajo anterior.

@@ -1,6 +1,8 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import PasswordChangeForm, UserCreationForm
 from django.contrib.auth.models import User
+
+from ventasApp.models import Cliente
 
 
 class RegistroClienteForm(UserCreationForm):
@@ -31,3 +33,25 @@ class RegistroClienteForm(UserCreationForm):
         if commit:
             usuario.save()
         return usuario
+
+
+class PerfilClienteForm(forms.ModelForm):
+    class Meta:
+        model = Cliente
+        fields = ["nombre", "correo", "telefono"]
+        labels = {"correo": "Correo electrónico"}
+        widgets = {
+            "nombre": forms.TextInput(attrs={"class": "form-control", "autocomplete": "name"}),
+            "correo": forms.EmailInput(attrs={"class": "form-control", "autocomplete": "email"}),
+            "telefono": forms.TextInput(attrs={"class": "form-control", "type": "tel", "autocomplete": "tel"}),
+        }
+
+
+class CambiarPasswordForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for nombre, campo in self.fields.items():
+            campo.widget.attrs.update({
+                "class": "form-control",
+                "autocomplete": "current-password" if nombre == "old_password" else "new-password",
+            })

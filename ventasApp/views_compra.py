@@ -6,7 +6,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_GET, require_http_methods
 
 from discosApp.models import Disco
-from .forms_compra import CompraForm
+from .forms_compra import BusquedaComprasForm, CompraForm
 from .models import Cliente, Venta
 
 
@@ -22,7 +22,23 @@ def cliente_del_usuario(usuario):
 def compras_lista(request):
     cliente = cliente_del_usuario(request.user)
     compras = Venta.objects.filter(cliente=cliente).select_related("disco", "disco__artista")
-    return render(request, "compras/lista.html", {"compras": compras})
+    form = BusquedaComprasForm(request.GET)
+    if form.is_valid():
+        q = form.cleaned_data["q"]
+        desde = form.cleaned_data["fecha_desde"]
+        hasta = form.cleaned_data["fecha_hasta"]
+        if q:
+            compras = compras.filter(disco__titulo__icontains=q)
+        if desde:
+            compras = compras.filter(fecha__gte=desde)
+        if hasta:
+            compras = compras.filter(fecha__lte=hasta)
+    else:
+        compras = compras.none()
+    filtros_activos = any(request.GET.get(campo, "").strip() for campo in ["q", "fecha_desde", "fecha_hasta"])
+    return render(request, "compras/lista.html", {
+        "compras": compras, "form": form, "filtros_activos": filtros_activos,
+    })
 
 
 @login_required

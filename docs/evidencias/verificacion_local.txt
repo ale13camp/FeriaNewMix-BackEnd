@@ -3,6 +3,26 @@ Fecha: 2026-10-03T08:39:40-03:00
 Entorno: .venv\Scripts\python.exe
 Alcance: comprobaciones locales; pruebas Django con base temporal.
 
+Actualización del 3 de octubre de 2026: perfil y búsqueda de compras del cliente.
+Comando: .\.venv\Scripts\python.exe manage.py test --noinput
+Código de salida: 0
+Ran 94 tests in 12.654s
+OK
+manage.py check: System check identified no issues (0 silenced).
+makemigrations --check --dry-run: No changes detected.
+Mi perfil: edición propia de nombre, correo y teléfono; usuario no editable.
+Navegador y ORM: los datos guardados coinciden entre Cliente y User.
+Cambio de contraseña con cuenta técnica separada: contraseña actual validada,
+sesión conservada, clave anterior rechazada y nueva clave aceptada.
+Mis compras: portadas de 64x64, enlaces y búsqueda por título y fechas inclusivas.
+Navegador: Toxicity, desde/hasta 02/10/2026 -> una compra; Limpiar -> dos compras.
+Capturas: 23_mi_perfil.png, 24_cambiar_contrasena.png y 25_mis_compras_filtros.png.
+La captura de contraseña muestra los campos vacíos, sin credenciales.
+Revisión independiente: privacidad, permisos, cambios atómicos y filtros correctos.
+Cuenta y compras técnicas retiradas al terminar; stock inicial restaurado y
+registros previos conservados. No se modificaron las claves de las cuentas locales.
+El documento técnico se actualiza y publica tras su revisión visual final.
+
 Actualización posterior del 3 de octubre de 2026: registro de clientes y compras.
 Comando: .\.venv\Scripts\python.exe manage.py test --noinput
 Código de salida: 0

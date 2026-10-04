@@ -20,7 +20,7 @@ En este equipo ya están preparados `.venv`, `.env` y la base local. Desde esta 
 
 Abrir `http://127.0.0.1:8000/`. Los accesos de prueba están en `.evaluacion/ACCESO_LOCAL.txt`, un archivo privado que no se sube a GitHub. Para detener el servidor iniciado en la terminal, presionar `Ctrl+C`. Esta preparación es local; en otro equipo se siguen las instrucciones de instalación siguientes.
 
-La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas. El ajuste del precio automático amplió la suite a 53; con el registro de clientes y las compras se aprobaron 73 pruebas. También se comprobaron las migraciones, rutas, 50 imágenes y el flujo de compra en el navegador. Los resultados están en `docs/evidencias/verificacion_local.txt`. El proyecto está publicado en GitHub; el despliegue en EC2 sigue pendiente de acceso.
+La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas. El ajuste del precio automático amplió la suite a 53; el registro y las compras, a 73; y las mejoras del perfil y filtros, a 94. También se comprobaron las migraciones, rutas, 50 imágenes y los recorridos de cliente en el navegador. Los resultados están en `docs/evidencias/verificacion_local.txt`. El proyecto está publicado en GitHub; el despliegue en EC2 sigue pendiente de acceso.
 
 ## Estructura
 
@@ -182,13 +182,19 @@ El PDF `10 Inicio de sesión y permisos.pdf`, pp. 1–7, explica autenticación 
 | Administrador | Sí | Sí | Sí | Sí, con restricciones de relaciones | Sí, desde Admin con `is_staff` |
 | Operador | Sí | Sí | Sí | No | No |
 | Consulta | Sí | No | No | No | No |
-| Cliente | Catálogo y sus propias compras | Su compra | No | No | No |
+| Cliente | Catálogo y sus propias compras | Su compra | Sus datos de perfil | No | No |
 
 El menú y los botones dependen de permisos. Las vistas verifican los permisos en el servidor, incluso si alguien escribe una URL directamente. La restricción por sesión con `login_required` es una decisión de implementación adicional; no se atribuye a la captura del PDF 10.
 
 El inicio es público y muestra **Registrarme como cliente**. El formulario `/cuentas/registro/` solicita usuario, nombre, correo, teléfono opcional y contraseña con confirmación. Django valida la contraseña; la cuenta y el Cliente se guardan juntos. El registro inicia la sesión y asigna únicamente el grupo Cliente, sin acceso al Admin ni al CRUD general.
 
 El cliente entra a la tienda, abre la ficha del disco y selecciona **Comprar**. Sólo ingresa la cantidad. El servidor toma su cliente, el disco de la ficha, la fecha y el precio vigente del catálogo. **Confirmar compra** registra una Venta y descuenta stock; una cantidad inválida o sin stock suficiente se rechaza. El total mostrado cambia con la cantidad. **Mis compras** muestra únicamente las ventas de su cuenta, sin edición ni eliminación. No hay carrito ni cobro real en línea, según lo confirmado por el usuario.
+
+**Mi perfil**, en `/cuentas/perfil/`, permite editar nombre, correo y teléfono. El nombre de usuario es de sólo lectura. Al guardar se actualizan juntos los datos del Cliente y el nombre/correo de su cuenta User. Una cuenta no puede elegir un cliente ajeno ni modificar permisos desde este formulario.
+
+Desde el perfil se accede a **Cambiar contraseña**, en `/cuentas/cambiar-contrasena/`. El formulario valida la contraseña actual, la nueva y su confirmación. Si el cambio es correcto, conserva la sesión y vuelve al perfil con un mensaje. Ambas páginas requieren una cuenta de cliente vinculada.
+
+**Mis compras** muestra portadas y títulos enlazados a las fichas. Permite buscar por título y filtrar por fecha desde/hasta, incluyendo ambos límites. **Limpiar** vuelve al historial completo del cliente. Una fecha inválida o un rango invertido muestra un error para corregirlo. Estas mejoras no requieren nuevas tablas ni cambios de stock.
 
 Los clientes creados antes de esta ampliación conservan sus datos y pueden seguir usándose en ventas administrativas aunque no tengan una cuenta vinculada. En otras instalaciones hay que ejecutar `python manage.py migrate` y `python manage.py crear_perfiles` para aplicar la migración y preparar el nuevo grupo.
 
