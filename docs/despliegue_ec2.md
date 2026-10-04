@@ -224,7 +224,7 @@ En la distribución que carga `/etc/nginx/conf.d/*.conf`, crear `/etc/nginx/conf
 server {
     listen 80;
     server_name IP_O_DNS_EC2;
-    client_max_body_size 15M;
+    client_max_body_size 16M;
 
     location /static/ {
         alias /var/www/newmix/staticfiles/;
@@ -246,6 +246,8 @@ server {
 ```
 
 NGINX necesita lectura en `staticfiles/` y `media/` y permiso para atravesar sus directorios padres. Ajustar sólo esos permisos según el usuario real de NGINX. No hacer pública la carpeta completa del proyecto ni ampliar los permisos de `.env` o `privados/` para resolver un error de lectura.
+
+El límite de 16M admite una imagen de hasta 5 MB y un PDF de hasta 10 MB en el mismo formulario, incluyendo el espacio adicional de la solicitud multipart.
 
 No añadir un `alias` a `privados/`. El documento se obtiene desde la vista protegida `discos_documento`, que devuelve `FileResponse` después de comprobar permisos.
 
