@@ -21,7 +21,12 @@ La captura de contraseña muestra los campos vacíos, sin credenciales.
 Revisión independiente: privacidad, permisos, cambios atómicos y filtros correctos.
 Cuenta y compras técnicas retiradas al terminar; stock inicial restaurado y
 registros previos conservados. No se modificaron las claves de las cuentas locales.
-El documento técnico se actualiza y publica tras su revisión visual final.
+Documento técnico actualizado, exportado con Word y revisado visualmente:
+12 páginas, 10 tablas, 9 capturas y títulos sin plegado.
+SHA256865C9BDBCB8C089AF661710B5B8C9E41811F22B882EA213DE276F0200584CF3A.
+GitHub: mejoras publicadas en main, 66346a5e574b22d874052ef8c8c9b484529601b4.
+Árbol180b9940a3171aeae39dbb4712b38fb06b461bb3 idéntico al commit local;
+18 archivos actualizados o añadidos. update_ref sin force, fetch y ls-remote OK.
 
 Actualización posterior del 3 de octubre de 2026: registro de clientes y compras.
 Comando: .\.venv\Scripts\python.exe manage.py test --noinput
@@ -73,7 +78,7 @@ Publicación de registro, compra y precio desde Admin en main:
 Árbol195b362721c81cf5b8cae0fd3c3d2dad6a27efac idéntico al commit local;
 37 archivos actualizados o añadidos. update_ref sin force, fetch y ls-remote OK.
 El documento técnico actualizado se publica después de su revisión visual.
-Documento técnico final verificado con Word y revisión visual de todas las páginas:
+Documento técnico de la etapa de registro verificado con Word y revisión visual:
 12 páginas, 10 tablas, 9 capturas y títulos sin plegado.
 SHA25699D6FA24E26C318FD170A57BA7E19931CF72A3F9ADB6B2637CCFA5BD300E3624.
 EC2, clonación en la instancia, MySQL y phpMyAdmin siguen pendientes de verificación.
