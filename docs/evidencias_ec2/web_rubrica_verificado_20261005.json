@@ -1,0 +1,410 @@
+{
+  "resultado": "WEB_RUBRICA_VERIFICADA_LIMPIEZA_COMPLETADA",
+  "fecha": "2026-10-05",
+  "origen": "http://127.0.0.1:8008",
+  "comprobaciones": [
+    {
+      "comprobacion": "Preflight tunel privado",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Listado anonimo requiere sesion",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Formulario de acceso Administrador",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Sesion web Administrador",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Inicio autenticado Administrador",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "JWT administrador por tunel",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado clientes",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado discos",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado ventas",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Conteos originales esperados",
+      "resultado": "correcto"
+    },
+    {
+      "comprobacion": "Lectura web administrador /artistas/catalogo/",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Lectura web administrador /artistas/lista/",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Lectura web administrador /discos/catalogo/",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Lectura web administrador /discos/lista/",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Lectura web administrador /ventas/",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Lectura web administrador /ventas/clientes/",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Lectura web administrador /admin/",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Lectura web administrador /admin/discosApp/disco/",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Formulario web agregar disco",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Formulario rechaza precio/stock/ano/imagen/PDF invalidos",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado clientes",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado discos",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado ventas",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Formulario invalido conserva originales",
+      "resultado": "correcto"
+    },
+    {
+      "comprobacion": "Formulario rechaza POST sin CSRF",
+      "resultado": "correcto",
+      "http": 403
+    },
+    {
+      "comprobacion": "Alta por formulario con imagen y PDF",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Snapshot agregado clientes",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado discos",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado ventas",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Un unico disco DEMO nuevo",
+      "resultado": "correcto"
+    },
+    {
+      "comprobacion": "Busqueda y filtro devuelven solo el DEMO",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Filtro incompatible devuelve cero coincidencias",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Detalle incluye imagen y enlace PDF",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Imagen servida con bytes originales",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "PDF protegido descargado con bytes originales",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "PDF anonimo requiere login",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "PDF privado sin enlace directo privados",
+      "resultado": "correcto",
+      "http": 404
+    },
+    {
+      "comprobacion": "PDF privado sin enlace directo media",
+      "resultado": "correcto",
+      "http": 404
+    },
+    {
+      "comprobacion": "Formulario editar precarga datos",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Administrador edita por formulario",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Edicion conserva imagen y documento",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Formulario de acceso Operador",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Sesion web Operador",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Inicio autenticado Operador",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Operador accede a editar",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Operador edita solamente DEMO",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Operador no elimina",
+      "resultado": "correcto",
+      "http": 403
+    },
+    {
+      "comprobacion": "Formulario de acceso Consulta",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Sesion web Consulta",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Inicio autenticado Consulta",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Consulta lee sin botones modificar",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Consulta POST denegado /discos/crear/",
+      "resultado": "correcto",
+      "http": 403
+    },
+    {
+      "comprobacion": "Consulta POST denegado /discos/editar/39/",
+      "resultado": "correcto",
+      "http": 403
+    },
+    {
+      "comprobacion": "Consulta POST denegado /discos/eliminar/39/",
+      "resultado": "correcto",
+      "http": 403
+    },
+    {
+      "comprobacion": "Consulta descarga PDF con permiso lectura",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Django Admin muestra ficha del DEMO",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Confirmacion de baja visible antes de capturas",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado clientes",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado discos",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado ventas",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Todos los originales exactos despues de pruebas web",
+      "resultado": "correcto"
+    },
+    {
+      "comprobacion": "Solo un DEMO con stock de prueba esperado",
+      "resultado": "correcto"
+    },
+    {
+      "comprobacion": "Formulario de acceso Administrador",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Sesion web Administrador",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Inicio autenticado Administrador",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "JWT administrador por tunel",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Identidad exclusiva del DEMO a eliminar",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Confirmacion web eliminar DEMO",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Baja por formulario web del DEMO",
+      "resultado": "correcto",
+      "http": 302
+    },
+    {
+      "comprobacion": "Registro DEMO eliminado",
+      "resultado": "correcto",
+      "http": 404
+    },
+    {
+      "comprobacion": "Snapshot agregado clientes",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado discos",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Snapshot agregado ventas",
+      "resultado": "correcto",
+      "http": 200
+    },
+    {
+      "comprobacion": "Originales exactos tras la baja",
+      "resultado": "correcto"
+    },
+    {
+      "comprobacion": "Limpieza exclusiva de los dos archivos DEMO y 50 originales SHA256 exactos",
+      "resultado": "correcto"
+    },
+    {
+      "comprobacion": "Conteos finales 5 cuentas/13 artistas/37 discos/4 clientes/6 ventas y stock de 37 discos originales",
+      "resultado": "correcto"
+    }
+  ],
+  "numero_comprobaciones": 76,
+  "estados_http": {
+    "200": 50,
+    "302": 10,
+    "403": 5,
+    "404": 3
+  },
+  "cantidades_originales": {
+    "clientes": 4,
+    "discos": 37,
+    "ventas": 6
+  },
+  "originales_antes_y_despues_iguales": true,
+  "registro_temporal": {
+    "id": 39,
+    "marca": "DEMO_RUBRICA_20261005_233445_afc08c",
+    "archivos": 2,
+    "eliminado": true,
+    "archivos_eliminados": true
+  },
+  "baja_web_verificada": true,
+  "observacion": "Disco sintetico y sus dos archivos eliminados exclusivamente. Todos los originales y sus archivos permanecen intactos.",
+  "cantidades_finales": {
+    "clientes": 4,
+    "discos": 37,
+    "ventas": 6
+  },
+  "archivos_originales_verificados": 50,
+  "sha256_archivos_originales_iguales": true,
+  "stock_37_discos_original": true,
+  "pendientes_limpieza": false
+}

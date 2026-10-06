@@ -1,0 +1,14 @@
+[Unit]
+Description=Feria NewMix Django
+After=network.target mariadb.service
+Requires=mariadb.service
+
+[Service]
+User=ec2-user
+Group=ec2-user
+WorkingDirectory=/var/www/newmix
+ExecStart=/var/www/newmix/.venv/bin/gunicorn --workers 2 --bind 127.0.0.1:8000 --access-logfile - --error-logfile - config.wsgi:application
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

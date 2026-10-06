@@ -1,0 +1,54 @@
+[
+  {
+    "check": "/",
+    "status": 200
+  },
+  {
+    "check": "/api/swagger/",
+    "status": 200
+  },
+  {
+    "check": "/api/schema/",
+    "status": 200
+  },
+  {
+    "check": "API sin JWT",
+    "status": 401
+  },
+  {
+    "check": "Administrador JWT y renovacion; lecturas y privacidad",
+    "status": 200,
+    "counts": {
+      "clientes": 4,
+      "discos": 37,
+      "ventas": 6
+    }
+  },
+  {
+    "check": "Operador JWT y renovacion; lecturas y privacidad",
+    "status": 200,
+    "counts": {
+      "clientes": 4,
+      "discos": 37,
+      "ventas": 6
+    }
+  },
+  {
+    "check": "Consulta JWT y renovacion; lecturas y privacidad",
+    "status": 200,
+    "counts": {
+      "clientes": 4,
+      "discos": 37,
+      "ventas": 6
+    }
+  },
+  {
+    "check": "Cliente JWT y renovacion; lecturas y privacidad",
+    "status": 200,
+    "counts": {
+      "clientes": 1,
+      "discos": 37,
+      "ventas": 2
+    }
+  }
+]

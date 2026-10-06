@@ -1,0 +1,13 @@
+{
+  "fecha": "2026-10-05",
+  "origen": "EC2 por tunel SSH",
+  "ip_publica": "35.168.62.2",
+  "jwt_emitido_desde_swagger": 200,
+  "authorize": "Authorized",
+  "token_oculto_en_captura": true,
+  "metodo": "GET",
+  "endpoint": "/api/discos/1/",
+  "respuesta": 200,
+  "perfil": "Consulta",
+  "campos_privados_omitidos": true
+}

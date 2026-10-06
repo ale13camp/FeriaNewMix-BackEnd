@@ -1,0 +1,33 @@
+FECHA_UTC 2026-10-06T00:26:27Z
+codex/sumativa-3-api
+a53105b5eb3a880cd8a44d15bc5342c6854fd128
+active
+active
+active
+active
+active
+enabled
+enabled
+enabled
+enabled
+Requires=-.mount sysinit.target mariadb.socket system.slice
+After=network.target systemd-journald.socket system.slice basic.target systemd-tmpfiles-setup.service sysinit.target -.mount mariadb.socket tmp.mount
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+LISTEN 0      4096       127.0.0.1:8081      0.0.0.0:*    users:(("php",pid=3763,fd=3))
+LISTEN 0      2048       127.0.0.1:8000      0.0.0.0:*    users:(("gunicorn",pid=3549,fd=5),("gunicorn",pid=3547,fd=5),("gunicorn",pid=3540,fd=5))
+LISTEN 0      511          0.0.0.0:80        0.0.0.0:*    users:(("nginx",pid=3548,fd=8),("nginx",pid=3546,fd=8),("nginx",pid=2005,fd=8))
+LISTEN 0      4096       127.0.0.1:3306      0.0.0.0:*    users:(("mariadbd",pid=3234,fd=5),("systemd",pid=1,fd=59))
+LISTEN 0      511             [::]:80           [::]:*    users:(("nginx",pid=3548,fd=9),("nginx",pid=3546,fd=9),("nginx",pid=2005,fd=9))
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+System check identified no issues (0 silenced).
+No changes detected
+No broken requirements found.
+10 objects imported automatically (use -v 2 for details).
+
+Conteos originales: {'artistas': 13, 'discos': 37, 'clientes': 4, 'ventas': 6} archivos: 50
+Backend/base/host: django.db.backends.mysql newmix 127.0.0.1
+/ HTTP 200
+/api/swagger/ HTTP 200
+/api/schema/ HTTP 200
+ENTREGA_EC2_VERIFICADA

@@ -1,0 +1,1 @@
+{"cantidades_originales":{"clientes":4,"discos":37,"ventas":6},"comprobaciones":86,"estados_http":{"200":40,"201":4,"204":4,"401":3,"403":5,"404":1},"originales_antes_y_despues_iguales":true,"registros_temporales_eliminados":{"clientes":1,"discos":1,"ventas":2},"resultado":"HTTP_CRUD_VERIFICADO"}

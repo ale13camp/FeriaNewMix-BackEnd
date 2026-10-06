@@ -6,7 +6,9 @@ La API permite que otra aplicación consulte el catálogo y gestione los mismos 
 
 La implementación se realizó en la rama `codex/sumativa-3-api`. El 4 de octubre de 2026 aprobaron **35 pruebas API y las 129 pruebas totales** del proyecto. También aprobaron `check`, la revisión de migraciones y la validación del esquema OpenAPI sin advertencias. Se comprobaron las consultas HTTP con los cuatro perfiles y el uso de Authorize con respuesta 200 desde Swagger local. Antes del cambio se habían repetido las 94 pruebas de la web; ese resultado se conserva como base previa y se distingue de la comprobación de los endpoints nuevos.
 
-**AWS está aplazado.** Se registraron acceso inicial, clonación del proyecto y preparación del entorno en EC2. Siguen pendientes la configuración de la base remota, migraciones, Gunicorn/NGINX y demostración de la web, API, Swagger y JWT desde AWS. No se asigna una calificación ni se marca ese criterio como cumplido.
+**EC2 fue verificado el 4 de octubre de 2026.** El servidor ejecutó la rama `codex/sumativa-3-api`, commit `a53105b5eb3a880cd8a44d15bc5342c6854fd128`, con MariaDB 10.11.18, Gunicorn y NGINX. Se aplicaron las migraciones y se comprobaron web, API, Swagger, JWT y phpMyAdmin de la misma instancia. Las 86 comprobaciones HTTP de CRUD, permisos y stock finalizaron con los registros originales intactos. HTTPS permanece pendiente: se usó un túnel SSH para credenciales y tokens. La demostración presencial del estudiante todavía debe realizarse; no se asigna una calificación.
+
+El **5 de octubre de 2026** se comprobó nuevamente el acceso a EC2 tras reiniciar el laboratorio, con IPv4 `35.168.62.2` en esa fecha. En Swagger remoto se emitió JWT con 200, se confirmó **Authorized** y se ejecutó `GET /api/discos/1/` con 200 usando Consulta. La captura oculta el token y la respuesta omite campos privados. Además, aprobaron 76 comprobaciones de la web remota: 62 funcionales de imagen/PDF, Admin, roles, CSRF y validación, más 14 de cierre y conservación de originales. Esta revisión tiene evidencia propia y no se suma a las 129 pruebas locales ni a las 86 comprobaciones API del día anterior.
 
 La fuente principal es `Eva Sumativa 3 - flex.docx`, entregada por el usuario. Se utilizaron las secciones de requerimientos funcionales, DRF, JWT, respuestas JSON, datos sensibles, Swagger, infraestructura y entregables, además de su imagen de Escala de Apreciación. Las decisiones concretas de esta API se explican aquí para distinguirlas de los ejemplos del curso.
 
@@ -14,7 +16,7 @@ La fuente principal es `Eva Sumativa 3 - flex.docx`, entregada por el usuario. S
 
 ![Arquitectura lógica de Feria NewMix](evidencias_api/arquitectura.png)
 
-La web entrega páginas HTML y usa la sesión de Django. Un cliente de la API envía solicitudes HTTP y recibe JSON; Swagger es un cliente para probarlas. Ambas entradas usan Django, el ORM y los modelos existentes. En local se utiliza SQLite para la revisión provisional. La ejecución en EC2 y su base remota se muestran en el diagrama como etapa pendiente.
+La web entrega páginas HTML y usa la sesión de Django. Un cliente de la API envía solicitudes HTTP y recibe JSON; Swagger es un cliente para probarlas. Ambas entradas usan Django, el ORM y los modelos existentes. Las pruebas locales usan SQLite temporal. En EC2, NGINX recibe HTTP y lo envía a Gunicorn en `127.0.0.1:8000`; Django se conecta a MariaDB `newmix` en `127.0.0.1:3306`. phpMyAdmin consulta esa misma base mediante un túnel SSH privado.
 
 | Archivo o carpeta | Responsabilidad |
 |---|---|
@@ -321,7 +323,7 @@ El esquema se genera desde el código con drf-spectacular. Describe métodos, ca
 
 La IA se utilizó para proponer y revisar medidas que luego deben comprobarse en el código y pruebas. No se atribuyen a la IA resultados que no se hayan verificado.
 
-La solicitud real que inició esta implementación fue **"PLEASE IMPLEMENT THIS PLAN"**, seguida del plan aprobado. Su alcance fue agregar la API REST, JWT, control de roles y privacidad, Swagger, pruebas y documentación, conservando la web y los datos existentes y dejando AWS aplazado. Se conserva esa frase como evidencia de la solicitud; el resumen del plan no se presenta como una cita literal.
+La solicitud real que inició esta implementación fue **"PLEASE IMPLEMENT THIS PLAN"**, seguida del plan aprobado. Su alcance inicial fue agregar la API REST, JWT, control de roles y privacidad, Swagger, pruebas y documentación, conservando la web y los datos existentes y dejando AWS aplazado. Ese aplazamiento corresponde a la etapa inicial. El 4 de octubre el usuario pidió continuar EC2 y configurar MariaDB/phpMyAdmin; la ejecución y sus pruebas se registran en esta entrega. Se conserva la frase inicial como evidencia de la solicitud; el resumen del plan no se presenta como una cita literal.
 
 | Recomendación aplicada en el diseño | Cómo se revisa |
 |---|---|
@@ -355,15 +357,16 @@ La suite usa una base temporal y registros sintéticos. El esquema puede generar
 |---|---|
 | Base previa: 94 pruebas de la web. | Aprobadas el 4 de octubre de 2026 antes de la API. |
 | Pruebas específicas de API. | 35 aprobadas en 3,139 s; código 0. |
-| Suite completa después de la API. | 129 aprobadas en 14,665 s; código 0. |
+| Suite completa después de la API. | 129 aprobadas en 14,665 s; código 0. Repetición local del 4 de octubre: 129 aprobadas en 15,962 s. |
 | `check` y revisión de migraciones después del cambio. | Sin incidencias y `No changes detected`; código 0. |
 | Esquema OpenAPI con `--validate --fail-on-warn`. | Válido y sin advertencias; código 0. |
 | Rutas públicas de esquema, Swagger y ReDoc. | Respuestas y HTML cubiertos por pruebas; HTTP 200 y Swagger visual comprobados. |
 | CRUD, roles, privacidad, stock, JWT, archivos y errores. | Cubiertos por las 35 pruebas API aprobadas. |
-| Authorize y consumo desde Swagger en el navegador. | Uso real de Authorize y GET protegido 200 en servidor local aislado. |
+| Authorize y consumo desde Swagger en el navegador. | Uso local previamente comprobado; el 5 de octubre, JWT 200, Authorized y Execute GET `/api/discos/1/` 200 desde EC2 por túnel. |
 | Token/refresh y consultas HTTP de los cuatro roles. | 200 en autenticación, renovación y GET; 401 sin token o con token inválido. |
 | Revisión independiente de código y esquema. | Corrección de la unión OpenAPI verificada; sin hallazgos abiertos en su alcance. |
-| AWS, base remota y consumo desde EC2. | Aplazados; sin demostración completa. |
+| AWS, base remota y consumo desde EC2. | Verificados el 4 de octubre: MariaDB, servicios, web/API, JWT, Swagger y phpMyAdmin; 86 comprobaciones HTTP. Acceso y Swagger interactivo repetidos el 5 de octubre. HTTPS pendiente. |
+| Web remota, archivos y controles del 5 de octubre. | 76 comprobaciones correctas: 62 funcionales y 14 de cierre. Imagen/PDF exactos por SHA256, baja web y limpieza de sus archivos; originales y stock intactos. |
 
 Las 35 pruebas incluyen CRUD de tres recursos, roles y precedencia, JWT/refresh/vencimiento, aislamiento de Cliente, manipulación de campos, privacidad de consulta y escritura, precio histórico, stock, rollback, relaciones protegidas, uploads válidos e inválidos, 404/405/500 seguros, documentación pública y validez del esquema. Utilizan SQLite y no demuestran bloqueos concurrentes de MySQL. El rollback de base tampoco garantiza revertir un archivo que el storage ya haya escrito antes de un fallo posterior.
 
@@ -371,27 +374,53 @@ Las consultas HTTP adicionales se ejecutaron sobre un servidor local aislado con
 
 Después de actualizar las contraseñas por petición del usuario, se repitieron token, refresh y consultas GET de los tres recursos con las cuatro cuentas locales: todas dieron 200. Los datos del negocio se conservaron. Los códigos y conteos están en [verificacion_http_local.json](evidencias_api/verificacion_http_local.json); no se publica la contraseña elegida.
 
-Las capturas de la web anterior se conservan en `docs/evidencias/`. Las nuevas evidencias locales de la API se guardan en `docs/evidencias_api/`, con datos sensibles ocultos. Una captura local no demuestra consumo desde EC2. Los resultados se transcribieron del reporte de implementación, sus logs y las comprobaciones HTTP/UI reales; las comprobaciones pendientes se completan sólo después de ejecutarlas.
+Las capturas de la web anterior se conservan en `docs/evidencias/` y las evidencias locales de la API en `docs/evidencias_api/`. Las evidencias de EC2 del 4 y 5 de octubre se encuentran en `docs/evidencias_ec2/`:
+
+- [Web servida desde EC2](evidencias_ec2/web_ec2.png) y [Swagger remoto](evidencias_ec2/swagger_ec2.png).
+- [Tablas de newmix en phpMyAdmin](evidencias_ec2/phpmyadmin_newmix.png) y [consulta de llaves foráneas](evidencias_ec2/phpmyadmin_relaciones.png).
+- [JWT y consultas de los cuatro perfiles](evidencias_ec2/http_verificado.json).
+- [CRUD, permisos, stock y limpieza del 4 de octubre](evidencias_ec2/crud_verificado.json).
+- [Execute GET 200 desde Swagger en EC2](evidencias_ec2/swagger_get_ec2.png) y [resumen del recorrido JWT/Authorize](evidencias_ec2/swagger_ui_verificado.json).
+- [Comprobaciones de la web remota del 5 de octubre](evidencias_ec2/web_rubrica_verificado_20261005.json) y [cierre de datos, stock y archivos](evidencias_ec2/cierre_web_demo_verificado_20261005.json).
+
+El navegador de la demostración usa `127.0.0.1:8008` para web/Swagger y `127.0.0.1:8081` para phpMyAdmin. Esas direcciones llegan por SSH a EC2; no corresponden al servidor Django ni a la base del computador. Se restauraron 5 cuentas, 4 grupos, 13 artistas, 37 discos, 4 clientes, 6 ventas y 50 archivos. La restauración inicial comparó 575 campos y los hashes de los 50 archivos. Las pruebas de escritura usaron un cliente, un disco y dos ventas temporales; todos se eliminaron al terminar, y los registros originales antes y después coincidieron.
+
+La revisión web del 5 de octubre comprobó alta y edición mediante formulario, búsqueda/filtros, ficha en Django Admin y confirmación de baja. La imagen y el PDF descargados coincidieron con sus archivos de prueba por SHA256. Se comprobaron el rechazo sin CSRF, datos inválidos, la lectura de Consulta y los rechazos de escritura/borrado según perfil, además de impedir la URL directa del documento privado. Los 4 clientes, 37 discos y 6 ventas originales coincidieron antes y después. Después de las capturas se comprobó la baja web del disco sintético y se retiraron sus dos archivos. Las 14 comprobaciones de cierre dejaron 76 en total; los 4 clientes, 37 discos y 6 ventas originales quedaron intactos, el stock de los 37 discos coincidió y los 50 archivos originales conservaron su SHA256, sin archivos de prueba adicionales.
+
+En EC2 aprobaron `check`, `pip check`, la revisión de migraciones, el esquema OpenAPI y `nginx -t`. No se ejecutó la suite Django sobre la base de negocio. `check --deploy` dejó cuatro advertencias relacionadas con HTTPS: HSTS, redirección y cookies seguras de sesión/CSRF. La seguridad del transporte público sigue pendiente, por lo que se usan credenciales/JWT por túnel durante la demostración. Estas pruebas no acreditan concurrencia de ventas ni una configuración HTTPS terminada.
 
 ## 14. Checklist de los diez criterios
 
 Los títulos corresponden a la Escala de Apreciación del Word. La tabla registra preparación y evidencia; **no asigna puntaje ni nota**. El criterio de documentación también requiere una demostración técnica presencial, que no puede declararse realizada con un archivo.
 
-| N.º | Criterio de evaluación | Evidencia prevista o disponible | Estado actual |
+| N.º | Criterio de evaluación | Evidencia disponible | Estado actual |
 |---|---|---|---|
-| 1 | Configura correctamente Django REST framework. | Dependencias, settings y `check` sin incidencias. | Verificado localmente. |
-| 2 | Implementa endpoints RESTful para los mantenedores y transacciones. | CRUD de Cliente, Disco y Venta; 35 pruebas API aprobadas. | Verificado localmente. |
-| 3 | Implementa autenticación JWT. | Token, refresh, expiración y protección probados; uso real de Authorize. | Verificado localmente. |
-| 4 | Genera respuestas JSON válidas y estructuradas. | JSON de listas/detalles, validaciones y códigos HTTP. | Verificado localmente. |
-| 5 | Implementa control de acceso basado en roles. | Cuatro roles, precedencia, cuenta sin rol y `is_staff` aislado. | Verificado localmente. |
-| 6 | Protege adecuadamente la información sensible. | Serializers por perfil, propiedad y errores seguros. | Verificado localmente. |
-| 7 | Integra Swagger/OpenAPI de forma funcional. | Esquema válido sin advertencias; rutas, ejemplos, Authorize y GET 200. | Verificado localmente. |
-| 8 | Aplica recomendaciones de seguridad obtenidas mediante IA. | Medidas de esta guía y pruebas de seguridad aprobadas. | Documentado y verificado localmente. |
-| 9 | Despliega exitosamente la solución en AWS EC2. | Acceso/clonación iniciales; faltan base, servicios y consumo remoto. | Pendiente: AWS aplazado. |
-| 10 | Presenta documentación y demostración técnica completa. | README, guía, informe y capturas locales; demostración presencial requerida. | Documentación local preparada; demostración presencial y remota pendientes. |
+| 1 | Configura correctamente Django REST framework. | Dependencias, settings y `check` sin incidencias en local y EC2. | Verificado. |
+| 2 | Implementa endpoints RESTful para los mantenedores y transacciones. | CRUD de Cliente, Disco y Venta; 35 pruebas API locales y comprobaciones HTTP en EC2. | Verificado. |
+| 3 | Implementa autenticación JWT. | Token, refresh y protección de cuatro perfiles; emisión y Authorize desde Swagger EC2 el 5 de octubre. | Verificado. |
+| 4 | Genera respuestas JSON válidas y estructuradas. | Listas/detalles, validación y códigos HTTP; esquema validado. | Verificado. |
+| 5 | Implementa control de acceso basado en roles. | Cuatro roles; acciones permitidas y 403 de escritura/borrado no autorizado en EC2. | Verificado. |
+| 6 | Protege adecuadamente la información sensible. | Campos por perfil, propiedad y errores seguros; aislamiento de Cliente comprobado. | Verificado en su alcance; HTTPS público pendiente. |
+| 7 | Integra Swagger/OpenAPI de forma funcional. | Esquema válido; Swagger EC2 con JWT 200, Authorized y Execute GET protegido 200 el 5 de octubre. | Verificado. |
+| 8 | Aplica recomendaciones de seguridad obtenidas mediante IA. | Medidas de esta guía, registro de uso de IA y pruebas de permisos/privacidad. | Documentado y verificado en su alcance. |
+| 9 | Despliega exitosamente la solución en AWS EC2. | MariaDB, migraciones, Gunicorn/NGINX, web, API, JWT y phpMyAdmin remoto. | Despliegue verificado; laboratorio debe estar activo. |
+| 10 | Presenta documentación y demostración técnica completa. | README, guía API/EC2, informe y capturas locales/remotas. | Documentación preparada; presentación presencial pendiente. |
+
+### Recorrido preparado para la presentación
+
+Este recorrido es una propuesta de demostración, no una afirmación de que el estudiante ya lo presentó. Usar cuentas de prueba y valores sintéticos; ocultar contraseñas, tokens y datos personales en las capturas.
+
+1. Explicar Cliente y Disco como mantenedores y Venta como transacción; mostrar modelos, llaves foráneas y rutas GET/POST/PUT/DELETE. Indicar que web y API utilizan la misma base.
+2. Mostrar EC2 activo, servicios `mariadb`, `newmix` y `nginx`, conexión Django `mysql/newmix` y las tablas/relaciones de esa base en phpMyAdmin. Explicar por qué el navegador usa localhost a través de SSH.
+3. En Swagger remoto, ejecutar GET sin JWT para mostrar 401. Obtener un token en privado, usar **Authorize**, consultar discos con 200 y explicar la renovación con el Refresh Token. No mostrar sus valores en una captura pública.
+4. Con Administrador, crear un Cliente y un Disco marcados como prueba. Mostrar POST 201, GET 200 y PUT 200. Guardar sus IDs para eliminar únicamente esos registros al terminar.
+5. Crear una Venta sobre ese disco de prueba y mostrar el stock antes/después. Por ejemplo, stock 10 y cantidad 2 dan stock 8; editar a cantidad 3 deja 7, y eliminar la venta lo devuelve a 10. Los números de este ejemplo son sintéticos. Mostrar además el rechazo por stock insuficiente y una relación protegida.
+6. Cambiar de perfil: Operador puede crear/modificar pero DELETE da 403; Consulta no puede escribir; Cliente sólo ve su cuenta y sus compras, y un ID ajeno da 404. Comparar respuestas para explicar la ocultación de correo, teléfono e importes de venta.
+7. Explicar las recomendaciones de IA aplicadas a JWT, campos por perfil, propiedad, precio/fecha desde el servidor, stock transaccional, archivos privados y errores seguros. Relacionar cada decisión con código y evidencia, sin atribuir a la IA una verificación que no se ejecutó.
+8. Eliminar primero las ventas de prueba, después el disco y el cliente creados en la demostración. Confirmar el stock y conservar los registros originales. Mostrar documentación, resultados de pruebas y la limitación pendiente de HTTPS.
 
 ## 15. Alcance de la entrega
 
-La ampliación conserva la web y añade una entrada REST sobre los modelos existentes. El foco es proteger datos y acciones según perfil, mantener el stock y dejar instrucciones que puedan repetirse con datos de prueba. Una entrega local verificada debe distinguirse de la disponibilidad remota: el paso a AWS sigue pendiente hasta configurar y comprobar su base, servicios y endpoints.
+La ampliación conserva la web y añade una entrada REST sobre los modelos existentes. El foco es proteger datos y acciones según perfil, mantener el stock y dejar instrucciones que puedan repetirse con datos de prueba. La entrega incluye verificaciones locales y remotas diferenciadas: la suite local aprobó 129 pruebas; EC2 aprobó 86 comprobaciones API el 4 de octubre, 76 comprobaciones web el 5 (62 funcionales y 14 de cierre), además del recorrido interactivo JWT/Authorize/Execute de Swagger. La baja del disco sintético y la retirada de sus archivos quedaron verificadas. La disponibilidad depende del laboratorio activo; HTTPS y la presentación presencial siguen pendientes.
 
-Para el requisito de nube, revisar la guía existente [despliegue_ec2.md](despliegue_ec2.md) y completar sólo con resultados reales. Para el funcionamiento previo de la web, consultar [README](../README.md), [fuentes.md](fuentes.md) y [uso_ia.md](uso_ia.md). No se reemplaza el documento técnico anterior ni se inventan evidencias para completar la rúbrica.
+Para el requisito de nube, revisar [despliegue_ec2.md](despliegue_ec2.md), que registra la configuración comprobada y cómo repetir su revisión. Para el funcionamiento previo de la web, consultar [README](../README.md), [fuentes.md](fuentes.md) y [uso_ia.md](uso_ia.md). Los ejemplos sintéticos, el historial local y las pruebas de EC2 se identifican por separado. La checklist ayuda a preparar la evaluación; la nota y el cumplimiento de la presentación los determina el docente.

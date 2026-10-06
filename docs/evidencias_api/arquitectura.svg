@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="760" viewBox="0 0 1500 760">
+<defs><marker id="arrow" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#48566a"/></marker></defs>
+<rect width="1500" height="760" fill="white"/>
+<g font-family="Arial, sans-serif" fill="#172331">
+<text x="45" y="54" font-size="31" font-weight="bold">Feria NewMix en AWS EC2</text>
+<rect x="410" y="86" width="1050" height="610" rx="18" fill="#f6f8fb" stroke="#68788c" stroke-width="2"/>
+<text x="438" y="125" font-size="26" font-weight="bold">Instancia Amazon Linux 2023</text>
+<rect x="42" y="174" width="280" height="140" rx="10" fill="#eaf0f8" stroke="#8ba0b8"/>
+<text x="182" y="214" text-anchor="middle" font-size="25" font-weight="bold">Cliente web</text>
+<text x="182" y="251" text-anchor="middle" font-size="23">HTML y sesión</text>
+<text x="182" y="283" text-anchor="middle" font-size="23">Swagger y JWT</text>
+<path d="M322,244 H455" stroke="#48566a" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="344" y="228" font-size="21">HTTP</text>
+<rect x="462" y="174" width="226" height="140" rx="10" fill="#e5edf8" stroke="#8ba0b8"/>
+<text x="575" y="219" text-anchor="middle" font-size="25" font-weight="bold">NGINX</text>
+<text x="575" y="259" text-anchor="middle" font-size="22">Puerto 80</text>
+<path d="M688,244 H752" stroke="#48566a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="762" y="160" width="332" height="207" rx="10" fill="#e5edf8" stroke="#8ba0b8"/>
+<text x="928" y="206" text-anchor="middle" font-size="25" font-weight="bold">Gunicorn y Django</text>
+<text x="928" y="243" text-anchor="middle" font-size="23">Web y API REST</text>
+<text x="928" y="278" text-anchor="middle" font-size="22">JWT permisos serializers</text>
+<text x="928" y="316" text-anchor="middle" font-size="22">ORM</text>
+<text x="928" y="348" text-anchor="middle" font-size="21">127.0.0.1:8000</text>
+<path d="M1094,244 H1150" stroke="#48566a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="1162" y="174" width="259" height="160" rx="10" fill="#e5edf8" stroke="#8ba0b8"/>
+<text x="1291" y="217" text-anchor="middle" font-size="25" font-weight="bold">MariaDB</text>
+<text x="1291" y="254" text-anchor="middle" font-size="23">Base newmix</text>
+<text x="1291" y="291" text-anchor="middle" font-size="21">127.0.0.1:3306</text>
+<rect x="462" y="419" width="226" height="126" rx="10" fill="#fff" stroke="#9eaab9"/>
+<text x="575" y="459" text-anchor="middle" font-size="23" font-weight="bold">Archivos públicos</text>
+<text x="575" y="500" text-anchor="middle" font-size="22">static y media</text>
+<path d="M575,314 V413" stroke="#48566a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="762" y="419" width="332" height="126" rx="10" fill="#fff" stroke="#9eaab9"/>
+<text x="928" y="459" text-anchor="middle" font-size="23" font-weight="bold">Documentos privados</text>
+<text x="928" y="500" text-anchor="middle" font-size="22">Vista protegida de Django</text>
+<path d="M928,367 V413" stroke="#48566a" stroke-width="3" marker-end="url(#arrow)"/>
+<rect x="42" y="562" width="280" height="130" rx="10" fill="#edf4ef" stroke="#8da99a"/>
+<text x="182" y="602" text-anchor="middle" font-size="23" font-weight="bold">PC del estudiante</text>
+<text x="182" y="639" text-anchor="middle" font-size="22">Túnel SSH privado</text>
+<text x="182" y="671" text-anchor="middle" font-size="21">Puertos 8008 y 8081</text>
+<rect x="1162" y="432" width="259" height="140" rx="10" fill="#edf4ef" stroke="#8da99a"/>
+<text x="1291" y="475" text-anchor="middle" font-size="25" font-weight="bold">phpMyAdmin</text>
+<text x="1291" y="514" text-anchor="middle" font-size="21">127.0.0.1:8081</text>
+<text x="1291" y="548" text-anchor="middle" font-size="21">Sólo demostración</text>
+<path d="M1291,432 V342" stroke="#48566a" stroke-width="3" marker-end="url(#arrow)"/>
+<path d="M322,628 H1291 V580" fill="none" stroke="#577766" stroke-width="3" marker-end="url(#arrow)"/>
+<text x="544" y="658" font-size="22">Acceso SSH a NGINX y phpMyAdmin remotos</text>
+<text x="42" y="735" font-size="21">Pruebas locales aisladas con SQLite     ·     Datos del despliegue en MariaDB     ·     HTTPS público pendiente</text>
+</g></svg>

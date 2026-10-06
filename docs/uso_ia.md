@@ -21,7 +21,7 @@ El apoyo se aplica en las siguientes partes del proyecto:
 - Carga de imágenes y documentos y acceso protegido al PDF.
 - Configuración `.env`, importación del catálogo y guía de despliegue.
 
-No se registran como terminados el despliegue EC2, la conexión MySQL o las pruebas sólo porque hayan sido propuestos. Los resultados deben respaldarse con ejecución y evidencia real.
+En esa primera etapa, la propuesta de despliegue y de conexión MySQL no constituía una ejecución. Los resultados posteriores se registran con su fecha y evidencia; la continuación de EC2 del 4 de octubre se describe abajo.
 
 ## Ajuste solicitado el 3 de octubre de 2026
 
@@ -48,3 +48,28 @@ El proyecto original contiene `static/IA/IA.md` e imágenes de evidencia en `sta
 ## Revisión por el estudiante
 
 El estudiante debe poder explicar qué hace cada modelo, cómo se relacionan Cliente, Disco y Venta, cómo funcionan GET y POST en los formularios, por qué se revisan permisos en las vistas y cómo una venta modifica stock. La revisión presencial debe utilizar el código y los resultados reales, junto con las fuentes indicadas en [fuentes.md](fuentes.md).
+
+## Continuación de EC2 y revisión de la rúbrica: 4 de octubre de 2026
+
+La solicitud real del usuario fue:
+
+> Continúa el despliegue de FeriaNewMix-BackEnd en EC2 y configura MariaDB y phpMyAdmin. Revisa primero `.evaluacion/GUIA_MANUAL_EC2_Y_PHPMYADMIN.md`. Los permisos de AWS ya están en «Permitir siempre»; comprueba el acceso antes de realizar cambios.
+
+Se revisó la guía privada y se comprobó el acceso antes de modificar el servidor. La ayuda de IA se aplicó a la preparación de MariaDB, variables privadas, restauración conservando datos, Gunicorn/NGINX, phpMyAdmin por túnel, pruebas JWT y verificación de CRUD/stock. El usuario autorizó expresamente SSH desde la IP de su computador. Las credenciales temporales, contraseñas, claves y respaldos permanecen fuera del repositorio público.
+
+La evidencia real registra la conexión Django `mysql/newmix`, servicios activos, web/Swagger/phpMyAdmin y JWT de cuatro roles. Las 86 comprobaciones HTTP utilizaron registros temporales, los retiraron al terminar y compararon los originales antes/después. Se diferenciaron de las 129 pruebas locales; no se ejecutó la suite Django sobre la base de negocio remota. Los resultados se encuentran en [la guía EC2](despliegue_ec2.md) y `evidencias_ec2/`.
+
+Después, el usuario pidió revisar lo que faltaba para completar la entrega y obtener la mayor cantidad de puntos de la rúbrica. Se actualizó la documentación para relacionar los diez criterios con código y evidencia reales, y se preparó un recorrido de presentación. No se asigna una nota ni se presenta la exposición del estudiante como realizada. HTTPS permanece pendiente y las credenciales/JWT se usan por túnel durante la demostración.
+
+El estudiante debe revisar y comprender estas decisiones antes de presentar: la base remota compartida por web/API, la diferencia entre sesión y JWT, los permisos por perfil, la protección de datos, los movimientos de stock y el alcance de las pruebas. La ayuda de IA no reemplaza esa explicación ni la evaluación presencial.
+
+
+## Verificación tras reiniciar el laboratorio: 5 de octubre de 2026
+
+Al continuar la revisión de la rúbrica se comprobó de nuevo el acceso antes de realizar cambios. La IP observada después del reinicio fue `35.168.62.2`. La verificación detectó que MariaDB había vuelto a escuchar en todas las interfaces al arrancar sin su socket habilitado; se corrigió habilitando `mariadb.socket` y haciendo que el servicio lo requiera. El arranque normal posterior conservó la escucha en localhost. Esta corrección se respalda con ejecución, no sólo con la propuesta de IA.
+
+En Swagger de EC2 se emitió JWT con 200, se confirmó Authorized y se ejecutó GET `/api/discos/1/` con 200 desde el navegador y por túnel. El perfil Consulta recibió una respuesta sin campos privados. Se registró el recorrido y se preparó una captura con el token oculto.
+
+También aprobaron 76 comprobaciones de la web remota: 62 funcionales de formularios, búsqueda/filtros, Django Admin, edición por perfil, validación, CSRF, imagen y PDF, más 14 de cierre. Las descargas de prueba coincidieron por SHA256 y los 4 clientes, 37 discos y 6 ventas originales coincidieron antes/después. Después de capturarlo se comprobó la baja web del disco sintético y se retiraron sus dos archivos. El cierre verificó los 4 clientes, 37 discos y 6 ventas originales, el stock de los 37 discos y los 50 archivos originales exactos por SHA256, sin archivos de prueba adicionales. El resultado está en [cierre_web_demo_verificado_20261005.json](evidencias_ec2/cierre_web_demo_verificado_20261005.json).
+
+La evidencia del 5 de octubre complementa las 129 pruebas locales y las 86 comprobaciones API del día anterior, sin mezclarlas como una única suite. La presentación presencial y HTTPS público siguen pendientes; el guion organiza lo que el estudiante debe explicar y no asigna una nota obtenida.

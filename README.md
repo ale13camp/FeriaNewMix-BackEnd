@@ -8,7 +8,9 @@ El catálogo de origen contiene 13 artistas, 37 discos y sus 50 imágenes. Los J
 
 Repositorio del proyecto: [ale13camp/FeriaNewMix-BackEnd](https://github.com/ale13camp/FeriaNewMix-BackEnd).
 
-La evaluación exige EC2 y verificación de la base remota. La existencia del código y las instrucciones de despliegue no demuestra esos requisitos. La configuración local con SQLite es provisional y no equivale a una conexión MySQL verificada. AWS está aplazado en esta etapa: se registró acceso inicial, clonación y preparación del entorno en EC2, pero siguen pendientes la base, migraciones, servicios y demostración remota de la web y la API.
+El 4 de octubre de 2026 se verificó el despliegue en AWS EC2 con MariaDB, Gunicorn y NGINX. Django utiliza el motor `mysql` y la base `newmix` de la instancia. Se comprobaron web, API, JWT de los cuatro perfiles, Swagger y phpMyAdmin remoto; 86 comprobaciones HTTP de CRUD, permisos y stock conservaron los registros originales. Las evidencias y los límites están en la [guía EC2](docs/despliegue_ec2.md). HTTPS sigue pendiente; las contraseñas y los tokens se probaron mediante túnel SSH. La presentación presencial al docente todavía debe realizarse.
+
+El **5 de octubre de 2026** se renovó el acceso tras reiniciar el laboratorio. Se verificó Swagger en el navegador de EC2: emisión JWT 200, estado **Authorized** y **Execute** de `GET /api/discos/1/` con 200. También aprobaron 76 comprobaciones de la web remota: 62 funcionales y 14 de cierre. Incluyen formularios, búsqueda, Admin, imagen/PDF, permisos, CSRF, validación y baja del registro sintético. El cierre conservó los 4 clientes, 37 discos, 6 ventas y todo su stock; los 50 archivos originales coincidieron por SHA256 y se retiraron los dos archivos de prueba. La IP observada fue `35.168.62.2`; debe revisarse antes de otra presentación porque puede cambiar.
 
 ## Abrir la copia local preparada
 
@@ -20,7 +22,7 @@ En este equipo ya están preparados `.venv`, `.env` y la base local. Desde esta 
 
 Abrir `http://127.0.0.1:8000/`. Los accesos de prueba están en `.evaluacion/ACCESO_LOCAL.txt`, un archivo privado que no se sube a GitHub. Para detener el servidor iniciado en la terminal, presionar `Ctrl+C`. Esta preparación es local; en otro equipo se siguen las instrucciones de instalación siguientes.
 
-La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas. El ajuste del precio automático amplió la suite a 53; el registro y las compras, a 73; y las mejoras del perfil y filtros, a 94. También se comprobaron las migraciones, rutas, 50 imágenes y los recorridos de cliente en el navegador. Los resultados históricos están en `docs/evidencias/verificacion_local.txt`. El 4 de octubre se repitieron las 94 pruebas antes de la ampliación de la API y aprobaron. La ampliación agrega 35 pruebas API: aprobaron las 129 pruebas totales, `check`, la revisión de migraciones y la validación del esquema OpenAPI sin advertencias. Los resultados y límites están en [API Sumativa 3](docs/API_Sumativa3.md). El repositorio de la web está publicado en GitHub; esto no afirma que la ampliación de la API o el despliegue remoto ya se hayan publicado.
+La verificación inicial del 3 de octubre de 2026 aprobó 43 pruebas. El ajuste del precio automático amplió la suite a 53; el registro y las compras, a 73; y las mejoras del perfil y filtros, a 94. También se comprobaron las migraciones, rutas, 50 imágenes y los recorridos de cliente en el navegador. Los resultados históricos están en `docs/evidencias/verificacion_local.txt`. El 4 de octubre se repitieron las 94 pruebas antes de la ampliación de la API y aprobaron. La ampliación agrega 35 pruebas API: aprobaron las 129 pruebas totales, `check`, la revisión de migraciones y la validación del esquema OpenAPI sin advertencias. Los resultados y límites están en [API Sumativa 3](docs/API_Sumativa3.md). El servidor EC2 ejecutó la rama `codex/sumativa-3-api`, commit `a53105b5eb3a880cd8a44d15bc5342c6854fd128`, durante la verificación remota. Las 129 pruebas corresponden a la suite local; las 86 comprobaciones HTTP corresponden al backend con MariaDB en EC2.
 
 ## Estructura
 
@@ -251,10 +253,10 @@ Las pruebas crean una base temporal. Para una demostración manual que modifique
 
 ## Documentación y requisitos externos
 
-- [Guía de despliegue EC2](docs/despliegue_ec2.md): pasos propuestos, ejemplos de configuración y evidencia que falta reunir.
+- [Guía de despliegue EC2](docs/despliegue_ec2.md): configuración comprobada, instrucciones para repetirla y evidencia remota. Incluye las plantillas públicas de `docs/config_ec2/`, sin credenciales.
 - [Fuentes y decisiones](docs/fuentes.md): material de clases por archivo y página, y decisiones añadidas.
 - [Uso de IA](docs/uso_ia.md): prompt real de esta conversación y resumen de su aplicación.
 - [API Sumativa 3](docs/API_Sumativa3.md): contrato de servicios, seguridad, verificación y checklist de la evaluación.
-- [Informe técnico Sumativa 3 en Word](<docs/Informe tecnico Sumativa 3 Feria NewMix.docx>): explicación de la API, capturas locales y criterios pendientes.
+- [Informe técnico Sumativa 3 en Word](<docs/Informe tecnico Sumativa 3 Feria NewMix.docx>): documento de entrega de la API y su evaluación.
 
-GitHub está confirmado para la web en el repositorio enlazado al inicio. La preparación inicial de EC2 llegó a la clonación y al entorno virtual; todavía no demuestra una base remota operativa ni servicios publicados. El trabajo de AWS está aplazado y su criterio sigue pendiente. La guía EC2 existente contiene pasos propuestos y se conserva como referencia; no sustituye una comprobación remota ni evidencia de despliegue.
+Las evidencias remotas del 4 y 5 de octubre se encuentran en `docs/evidencias_ec2/`. Los JSON de verificación publican códigos y conteos, sin contraseñas, tokens ni datos personales. El laboratorio AWS debe estar activo durante la presentación; comprobar antes la IP actual y el túnel. La guía API incluye un recorrido para mostrar los diez criterios. La calificación depende de la evaluación del docente y de la demostración presencial.

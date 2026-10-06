@@ -1,0 +1,13 @@
+{
+  "resultado": "CIERRE_WEB_DEMO_VERIFICADO",
+  "cuentas": 5,
+  "artistas": 13,
+  "discos": 37,
+  "clientes": 4,
+  "ventas": 6,
+  "archivos_originales": 50,
+  "sha256_originales_iguales": true,
+  "stock_37_discos_original": true,
+  "registro_demo_ausente": true,
+  "archivos_demo_ausentes": true
+}
